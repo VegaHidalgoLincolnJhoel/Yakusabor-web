@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../CSS/style.css">
+    <title>Yaku Sabor - restaurant </title>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="../../../img/ICON1.png" alt="logo" id="navLogo" data-logo-default="../../../img/ICON1.png"
+                    data-logo-scroll="../../../img/icon2.png" />
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="index.html">INICIO</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="menu.html">MENÚ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="reservas.html">RESERVAS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="Contacto.html">CONTACTO</a>
+                    </li>
+                </ul>
+                <div class="navbar-actions">
+                    <button type="button" class="nav-link nav-register-btn" aria-label="Registro" data-bs-toggle="modal"
+                        data-bs-target="#registroModal">
+                        <img src="../../../img/register1.png" alt="Registrar"
+                            class="nav-register-image nav-register-default"
+                            data-register-default="../../../img/register1.png"
+                            data-register-scroll="../../../img/register2.png" />
+                        <span>Inicia Sesión</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- MODAL DE INICIO DE SESIÓN -->
+    <!-- ========================================== -->
+    <div class="modal fade" id="registroModal" tabindex="-1" aria-labelledby="registroModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registroModalLabel">Iniciar Sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <a href="#" class="text-decoration-none text-muted small">¿Olvidaste tu contraseña?</a>
+                    <!-- AQUÍ CAMBIAMOS EL ENLACE PARA QUE ABRA EL MODAL DE REGISTRO -->
+                    <a href="#" id="linkToRegister" class="text-decoration-none small">
+                        ¿No tienes cuenta? <strong>Regístrate</strong>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- NUEVO MODAL DE REGISTRO DE USUARIO -->
+    <!-- ========================================== -->
+    <div class="modal fade" id="crearCuentaModal" tabindex="-1" aria-labelledby="crearCuentaModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="crearCuentaModalLabel">Crear Cuenta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="regNombre" class="form-label">Nombre completo</label>
+                            <input type="text" class="form-control" id="regNombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regEmail" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="regEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regPassword" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="regPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regConfirmPassword" class="form-label">Confirmar Contraseña</label>
+                            <input type="password" class="form-control" id="regConfirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Registrarse</button>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <!-- ENLACE PARA VOLVER AL LOGIN -->
+                    <a href="#" id="linkToLogin" class="text-decoration-none small">
+                        ¿Ya tienes cuenta? <strong>Inicia sesión</strong>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Imagen central-->
+    <div class="banner">
+        <img src="../../../img/local.png" class="img-fluid" alt="...">
+    </div>
+
+    <!--Acerca de Nosotros-->
+    <div class="container text-center mb-4">
+        <h1 class="display-4">Acerca de Nosotros</h1>
+        <p class="lead">En Yaku Sabor, nos apasiona ofrecerte una experiencia culinaria única que celebra la riqueza
+            de la gastronomía peruana. Nuestro restaurante es un homenaje a los sabores auténticos y a la diversidad
+            de ingredientes que hacen que la comida peruana sea tan especial.</p>
+        <p>Desde nuestros ceviches frescos hasta nuestros platos tradicionales como el lomo saltado y el ají de
+            gallina, cada plato en nuestro menú está cuidadosamente preparado para brindarte una explosión de
+            sabores en cada bocado. Utilizamos ingredientes locales de alta calidad para garantizar que cada plato
+            sea una verdadera representación de la cocina peruana.</p>
+        <p>Además de nuestra deliciosa comida, en Yaku Sabor nos esforzamos por crear un ambiente acogedor y
+            familiar donde puedas disfrutar de momentos inolvidables con tus seres queridos. Nuestro equipo está
+            dedicado a brindarte un servicio excepcional para que tu experiencia sea siempre memorable.</p>
+        <p>¡Te invitamos a descubrir el sabor auténtico del Perú en Yaku Sabor! Ven y déjate llevar por una aventura
+            culinaria que te transportará a las raíces de nuestra cultura gastronómica.</p>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"></script>
+    </div>
+
+    <div class="border-bottom my-3"></div>
+
+    <!--Promociones-->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Promociones Especiales</h2>
+            <p class="text-center">Descubre nuestras ofertas exclusivas y disfruta de los mejores sabores a precios
+                increíbles.</p>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <img src="../../../img/promo1.png" class="card-img-top" alt="Promoción 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Combo Familiar</h5>
+                            <p class="card-text">Disfruta de un combo para 4 personas con nuestros platos más populares
+                                a
+                                un precio especial.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <img src="../../../img/Promo2.png" class="card-img-top" alt="Promoción 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Descuento en Ceviche</h5>
+                            <p class="card-text">Obtén un 20% de descuento en todos nuestros ceviches durante los fines
+                                de
+                                semana.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <img src="../../../img/Promo3.png" class="card-img-top" alt="Promoción 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Happy Hour</h5>
+                            <p class="card-text">Disfruta de 2x1 en bebidas seleccionadas de 5 PM a 7 PM todos los días.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="border-bottom my-3"></div>
+
+    <!--Cards-->
+    <h2 class="text-center mb-4">Nuestros Platos Bandera</h2>
+    <div class="contenedor">
+        <div class="card" style="width: 18rem;">
+            <img src="../../../img/Causa.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="card-text">Delicada causa de papa amarilla sazonada con cítricos, rellena con una suave
+                    emulsión y finos ingredientes seleccionados, logrando un equilibrio fresco y sofisticado en cada
+                    bocado.</p>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img src="../../../img/Chupe.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="card-text">Cremosa y reconfortante elaboración de inspiración casera, enriquecida con mariscos
+                    selectos y un sutil toque de especias que realzan su carácter profundo.</p>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img src="../../../img/Pescado frito.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="card-text">Filete de pescado fresco, cuidadosamente dorado hasta lograr una textura crujiente
+                    perfecta, acompañado de guarniciones clásicas que resaltan su sabor natural.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-1 fw-semibold">Yaku Sabor</p>
+            <p class="mb-1">Lima, Perú · +51 987 654 321 · contacto@yakusabor.com</p>
+            <small class="text-secondary">© 2026 Yaku Sabor. Todos los derechos reservados.</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <script src="../../Shared/JS/api-config.js"></script>
+    <script src="../../Principal/JS/nav.js"></script>
+    <script src="../../Principal/JS/login.js"></script>
+</body>
+
+</html>

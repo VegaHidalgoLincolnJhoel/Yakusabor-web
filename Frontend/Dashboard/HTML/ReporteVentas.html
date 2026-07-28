@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reporte de Ventas — Yaku Sabor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="../CSS/ReporteVentas.css" />
+</head>
+
+<body>
+
+    <!-- ══════════════════ TOOLBAR ══════════════════ -->
+    <div class="rv-toolbar">
+        <div class="rv-toolbar__left">
+            <h1 class="rv-title">📊 Reporte de Ventas</h1>
+            <span id="rvSubtitle" class="rv-subtitle">Cargando datos…</span>
+        </div>
+        <div class="rv-toolbar__right">
+            <select id="rvPeriodo" class="rv-select">
+                <option value="7">Últimos 7 días</option>
+                <option value="30" selected>Mayo 2025</option>
+                <option value="90">Últimos 90 días</option>
+            </select>
+            <button id="rvExportBtn" class="rv-btn rv-btn--outline">⬇ Exportar CSV</button>
+            <button id="rvRefreshBtn" class="rv-btn rv-btn--primary">↺ Actualizar</button>
+        </div>
+    </div>
+
+    <!-- ══════════════════ KPI CARDS ══════════════════ -->
+    <div class="rv-kpi-grid" id="rvKpiGrid">
+        <div class="rv-kpi-card" id="kpiVentas">
+            <div class="rv-kpi-icon rv-kpi-icon--blue">💰</div>
+            <div class="rv-kpi-body">
+                <p class="rv-kpi-label">Ventas Totales</p>
+                <h2 class="rv-kpi-value" id="kpiVentasVal">—</h2>
+                <span class="rv-kpi-badge rv-badge--up" id="kpiVentasDelta">—</span>
+            </div>
+        </div>
+        <div class="rv-kpi-card" id="kpiPedidos">
+            <div class="rv-kpi-icon rv-kpi-icon--green">🛒</div>
+            <div class="rv-kpi-body">
+                <p class="rv-kpi-label">Pedidos Totales</p>
+                <h2 class="rv-kpi-value" id="kpiPedidosVal">—</h2>
+                <span class="rv-kpi-badge rv-badge--up" id="kpiPedidosDelta">—</span>
+            </div>
+        </div>
+        <div class="rv-kpi-card" id="kpiTicket">
+            <div class="rv-kpi-icon rv-kpi-icon--purple">🏷️</div>
+            <div class="rv-kpi-body">
+                <p class="rv-kpi-label">Ticket Promedio</p>
+                <h2 class="rv-kpi-value" id="kpiTicketVal">—</h2>
+                <span class="rv-kpi-badge rv-badge--up" id="kpiTicketDelta">—</span>
+            </div>
+        </div>
+
+        <!-- KPI Meseros — solo informativo -->
+        <div class="rv-kpi-card" id="kpiMeseros">
+            <div class="rv-kpi-icon rv-kpi-icon--orange">👥</div>
+            <div class="rv-kpi-body">
+                <p class="rv-kpi-label">Meseros Registrados</p>
+                <h2 class="rv-kpi-value" id="kpiMeserosVal">—</h2>
+                <span class="rv-kpi-badge rv-badge--neutral" id="kpiMeserosSub">Cargando…</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════ CHARTS + TABLE ROW ══════════════════ -->
+    <div class="rv-main-row">
+        <div class="rv-card rv-card--chart">
+            <div class="rv-card__header">
+                <span class="rv-card__title">Ventas por día</span>
+                <div class="rv-chart-stats" id="rvChartStats">
+                    <span>Mínimo <strong id="statMin">—</strong></span>
+                    <span>Máximo <strong id="statMax">—</strong></span>
+                    <span>Promedio <strong id="statProm">—</strong></span>
+                </div>
+            </div>
+            <div class="rv-chart-wrap">
+                <canvas id="ventasDiasChart"></canvas>
+            </div>
+        </div>
+        <div class="rv-card rv-card--table">
+            <div class="rv-card__header">
+                <span class="rv-card__title">Ventas por mesero</span>
+                <span class="rv-badge rv-badge--neutral" id="meserosCount">—</span>
+            </div>
+            <div class="rv-table-wrap">
+                <table class="rv-table" id="meseroTable">
+                    <thead>
+                        <tr>
+                            <th>Mesero</th>
+                            <th>Turno</th>
+                            <th class="text-center">Pedidos</th>
+                            <th class="text-right">Ventas</th>
+                            <th>% Participación</th>
+                        </tr>
+                    </thead>
+                    <tbody id="meseroTableBody">
+                        <tr><td colspan="5" class="rv-table-empty">Cargando…</td></tr>
+                    </tbody>
+                    <tfoot id="meseroTableFoot"></tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════ SEGUNDA FILA ══════════════════ -->
+    <div class="rv-secondary-row">
+        <div class="rv-card">
+            <div class="rv-card__header">
+                <span class="rv-card__title">🍽️ Top Productos Vendidos</span>
+            </div>
+            <div id="topProductosContainer" class="rv-top-list">
+                <p class="rv-table-empty">Cargando…</p>
+            </div>
+        </div>
+        <div class="rv-card">
+            <div class="rv-card__header">
+                <span class="rv-card__title">📦 Presencial vs Delivery</span>
+            </div>
+            <div class="rv-donut-wrap">
+                <canvas id="tipoChart"></canvas>
+            </div>
+            <div id="tipoLegend" class="rv-donut-legend"></div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="rv-toast" id="rvToast"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- ══════════════════ CONFIG (debe ir ANTES de ReporteVentas.js) ══════════════════ -->
+    <script>
+        function resolveApiBaseUrl() {
+            const override = window.__API_BASE_URL__ || localStorage.getItem("apiBaseUrl");
+            if (override) return override.replace(/\/$/, "");
+            const { origin, hostname, protocol } = window.location;
+            if (hostname.endsWith(".app.github.dev") || hostname.endsWith(".githubpreview.dev")) {
+                return origin.replace(/-(\d+)\.app\.github\.dev$/, "-8080.app.github.dev")
+                    .replace(/-(\d+)\.githubpreview\.dev$/, "-8080.githubpreview.dev") + "/api";
+            }
+            return `${protocol}//${hostname}:8080/api`;
+        }
+        const API_BASE = resolveApiBaseUrl();
+
+        function authHeaders() {
+            const token = localStorage.getItem("token");
+            return {
+                "Content-Type": "application/json",
+                ...(token ? { Authorization: `Bearer ${token}` } : {})
+            };
+        }
+    </script>
+
+    <script src="../JS/ReporteVentas.js"></script>
+
+    <!-- ══════════════════ KPI MESEROS ══════════════════ -->
+    <script>
+        function contarMeserosEnSesion() {
+            try {
+                const raw = localStorage.getItem('mozos_activos');
+                if (!raw) return 0;
+                const obj = JSON.parse(raw);
+                const TTL = 8 * 60 * 60 * 1000; // 8 horas
+                const ahora = Date.now();
+                return Object.values(obj).filter(ts => (ahora - ts) < TTL).length;
+            } catch {
+                return 0;
+            }
+        }
+
+        async function actualizarKpiMeseros() {
+            try {
+                const res = await fetch(`${API_BASE}/usuarios/meseros`, { headers: authHeaders() });
+                if (!res.ok) throw new Error('Error ' + res.status);
+                const lista = await res.json();
+
+                const totalRegistrados = Array.isArray(lista) ? lista.length : 0;
+                const enSesion = contarMeserosEnSesion();
+
+                document.getElementById('kpiMeserosVal').textContent = totalRegistrados;
+                document.getElementById('kpiMeserosSub').textContent =
+                    enSesion > 0 ? `${enSesion} en sesión activa` : 'Ninguno en sesión';
+            } catch {
+                document.getElementById('kpiMeserosVal').textContent = '—';
+                document.getElementById('kpiMeserosSub').textContent = 'Sin datos';
+            }
+        }
+
+        window.addEventListener('load', actualizarKpiMeseros);
+    </script>
+</body>
+
+</html>

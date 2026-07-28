@@ -1,0 +1,348 @@
+/* ══════════════════════════════════════════════
+   ReporteVentas.css  —  Yaku Sabor Dashboard
+   Carpeta: Frontend/Dashboard/CSS/
+   ══════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --navy:        #1b3a57;
+  --navy-light:  #2f5b84;
+  --navy-ghost:  rgba(27,58,87,.06);
+  --sky:         #e8f1fb;
+  --accent:      #f0a500;
+  --green:       #16a34a;
+  --red:         #dc2626;
+  --purple:      #7c3aed;
+  --orange:      #ea580c;
+  --border:      #e2e8f0;
+  --text-muted:  #6b7b8a;
+  --radius:      14px;
+  --shadow:      0 4px 20px rgba(27,58,87,.09);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #f4f7fc;
+  color: var(--navy);
+  min-height: 100vh;
+  padding: 24px 28px 48px;
+}
+
+/* ── Toolbar ───────────────────────────────────── */
+.rv-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.rv-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0;
+}
+.rv-subtitle {
+  font-size: .82rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  display: block;
+}
+.rv-toolbar__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.rv-select {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-size: .85rem;
+  font-family: inherit;
+  background: #fff;
+  color: var(--navy);
+  cursor: pointer;
+  outline: none;
+}
+.rv-select:focus { border-color: var(--navy); }
+
+.rv-btn {
+  border-radius: 999px;
+  padding: 7px 18px;
+  font-size: .85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  transition: .2s;
+}
+.rv-btn--primary  { background: var(--navy); color: #fff; }
+.rv-btn--primary:hover { background: var(--navy-light); }
+.rv-btn--outline  { background: #fff; color: var(--navy); border: 1.5px solid var(--border); }
+.rv-btn--outline:hover { border-color: var(--navy); }
+
+/* ── KPI Grid ──────────────────────────────────── */
+.rv-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+@media (max-width: 992px) { .rv-kpi-grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 576px)  { .rv-kpi-grid { grid-template-columns: 1fr; } }
+
+.rv-kpi-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--border);
+}
+.rv-kpi-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  font-size: 1.4rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.rv-kpi-icon--blue   { background: #dbeafe; }
+.rv-kpi-icon--green  { background: #dcfce7; }
+.rv-kpi-icon--purple { background: #ede9fe; }
+.rv-kpi-icon--orange { background: #ffedd5; }
+
+.rv-kpi-label {
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  margin-bottom: 4px;
+}
+.rv-kpi-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.rv-kpi-badge {
+  font-size: .75rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.rv-badge--up      { background: #dcfce7; color: #15803d; }
+.rv-badge--down    { background: #fee2e2; color: #dc2626; }
+.rv-badge--neutral { background: #f1f5f9; color: #475569; }
+
+/* ── Cards ─────────────────────────────────────── */
+.rv-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.rv-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.rv-card__title {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+/* ── Main row (chart + table) ──────────────────── */
+.rv-main-row {
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+@media (max-width: 1100px) { .rv-main-row { grid-template-columns: 1fr; } }
+
+/* Chart */
+.rv-card--chart { }
+.rv-chart-stats {
+  display: flex;
+  gap: 16px;
+  font-size: .8rem;
+  color: var(--text-muted);
+}
+.rv-chart-stats strong { color: var(--navy); font-weight: 700; }
+.rv-chart-wrap {
+  padding: 20px;
+  height: 280px;
+}
+.rv-chart-wrap canvas { width: 100% !important; height: 100% !important; }
+
+/* Table */
+.rv-card--table { }
+.rv-table-wrap { overflow-x: auto; }
+.rv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .875rem;
+}
+.rv-table thead th {
+  background: #f8fafc;
+  color: var(--text-muted);
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.rv-table tbody td {
+  padding: 11px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+.rv-table tbody tr:last-child td { border-bottom: none; }
+.rv-table tbody tr:hover { background: var(--navy-ghost); }
+.rv-table tfoot td {
+  padding: 12px 16px;
+  font-weight: 700;
+  background: #f8fafc;
+  border-top: 2px solid var(--border);
+}
+.text-right { text-align: right !important; }
+.text-center { text-align: center !important; }
+
+.rv-table-empty {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+  font-size: .9rem;
+}
+
+/* Progress bar en tabla meseros */
+.rv-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rv-bar {
+  flex: 1;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.rv-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #1b3a57, #2f5b84);
+  transition: width .5s ease;
+}
+.rv-bar-pct {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--navy);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* Turno badge */
+.rv-turno {
+  font-size: .72rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+.rv-turno--mañana  { background: #fef9c3; color: #a16207; }
+.rv-turno--tarde   { background: #dbeafe; color: #1d4ed8; }
+.rv-turno--noche   { background: #ede9fe; color: #6d28d9; }
+
+/* ── Secondary row ─────────────────────────────── */
+.rv-secondary-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 768px) { .rv-secondary-row { grid-template-columns: 1fr; } }
+
+/* Top productos */
+.rv-top-list { padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; }
+.rv-top-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.rv-top-rank {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  font-size: .72rem;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.rv-top-rank--1 { background: #f0a500; }
+.rv-top-rank--2 { background: #94a3b8; }
+.rv-top-rank--3 { background: #c2551e; }
+.rv-top-info { flex: 1; }
+.rv-top-name { font-size: .88rem; font-weight: 600; color: var(--navy); }
+.rv-top-meta { font-size: .76rem; color: var(--text-muted); }
+.rv-top-val  { font-size: .88rem; font-weight: 700; color: var(--navy); white-space: nowrap; }
+
+/* Donut */
+.rv-donut-wrap { padding: 16px; height: 200px; display: flex; align-items: center; justify-content: center; }
+.rv-donut-wrap canvas { max-width: 180px; max-height: 180px; }
+.rv-donut-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 18px 16px;
+  font-size: .82rem;
+}
+.rv-donut-legend span {
+  display: flex; align-items: center; gap: 6px; color: var(--text-muted); font-weight: 600;
+}
+.rv-donut-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+
+/* Toast */
+.rv-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--navy);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: .85rem;
+  font-weight: 600;
+  box-shadow: 0 8px 28px rgba(27,58,87,.28);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: .3s ease;
+  pointer-events: none;
+  z-index: 9999;
+}
+.rv-toast.show { opacity: 1; transform: translateY(0); }
+
+.rv-badge {
+  font-size: .72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}

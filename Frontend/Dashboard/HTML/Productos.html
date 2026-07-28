@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos — Yaku Sabor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/styleproducto.css">
+</head>
+
+<body>
+    <main class="page-wrap">
+        <div class="page-header">
+            <button class="btn-navy" id="btnNuevoProducto">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                    stroke-linecap="round">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Nuevo Producto
+            </button>
+        </div>
+
+        <!-- Card principal -->
+        <div class="products-card">
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <input type="search" id="searchInput" placeholder="Buscar producto…" />
+                <select id="filterCategoria">
+                    <option value="">Todas las categorías</option>
+                </select>
+
+                <button class="btn btn-sm btn-outline-secondary" id="btnReload">↺ Actualizar</button>
+            </div>
+
+            <!-- Tabla -->
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:36px">#</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th style="text-align:center; width:110px">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <tr>
+                            <td colspan="5" class="table-placeholder">
+                                <span class="spinner-inline"></span> Cargando productos…
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Paginación -->
+            <div class="pagination-bar" id="paginationBar" style="display:none">
+                <span id="paginationInfo"></span>
+                <div class="page-btns" id="paginationBtns"></div>
+            </div>
+
+            <!-- Status -->
+            <div class="status-bar" id="statusBar"></div>
+        </div>
+    </main>
+
+    <!-- ══════════════════════════════════════════
+     MODAL — Crear / Editar producto
+════════════════════════════════════════════ -->
+    <div class="modal fade" id="modalProducto" tabindex="-1" aria-labelledby="modalProductoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalProductoLabel">Nuevo Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="modalProductoId">
+
+                    <div class="row g-3">
+                        <!-- Nombre -->
+                        <div class="col-12">
+                            <label class="form-label" for="inputNombre">Nombre del producto <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="inputNombre" placeholder="Ej: Ceviche clásico"
+                                maxlength="120">
+                        </div>
+
+                        <!-- Descripción -->
+                        <div class="col-12">
+                            <label class="form-label" for="inputDescripcion">Descripción</label>
+                            <textarea class="form-control" id="inputDescripcion" rows="2"
+                                placeholder="Descripción breve del plato…" maxlength="400"></textarea>
+                        </div>
+
+                        <!-- Categoría -->
+                        <div class="col-12 col-md-7">
+                            <label class="form-label" for="inputCategoria">Categoría <span
+                                    class="text-danger">*</span></label>
+                            <div style="position:relative">
+                                <select class="form-select" id="inputCategoria">
+                                    <option value="" disabled selected>Cargando categorías…</option>
+                                </select>
+                                <div id="loadingCatSpinner"
+                                    style="position:absolute;top:50%;right:36px;transform:translateY(-50%);display:none">
+                                    <span class="spinner-inline" style="width:14px;height:14px"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Precio -->
+                        <div class="col-12 col-md-5">
+                            <label class="form-label" for="inputPrecio">Precio (S/) <span
+                                    class="text-danger">*</span></label>
+                            <div class="input-prefix">
+                                <span>S/</span>
+                                <input type="number" class="form-control" id="inputPrecio" placeholder="0.00" min="0"
+                                    step="0.01">
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error inline -->
+            <div id="modalError" class="alert alert-danger py-2 mt-3 mb-0"
+                style="display:none; font-size:.85rem; border-radius:10px;"></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3"
+                data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn-navy" id="btnGuardarProducto">Guardar producto</button>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     MODAL — Confirmar eliminación
+════════════════════════════════════════════ -->
+    <div class="modal fade" id="modalEliminar" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header" style="background:#c0392b">
+                    <h5 class="modal-title">Eliminar producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body text-center" style="padding:24px">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c0392b" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px">
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                        <path d="M10 11v6" />
+                        <path d="M14 11v6" />
+                        <path d="M9 6V4h6v2" />
+                    </svg>
+                    <p style="font-size:.93rem; color:#333; margin:0">
+                        ¿Eliminar <strong id="eliminarNombre"></strong>? Esta acción no se puede deshacer.
+                    </p>
+                </div>
+                <div class="modal-footer justify-content-center" style="border:none">
+                    <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3"
+                        data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger btn-sm rounded-pill px-3" id="btnConfirmarEliminar">Sí,
+                        eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function resolveApiBaseUrl() {
+            const override = window.__API_BASE_URL__ || localStorage.getItem("apiBaseUrl");
+            if (override) return override.replace(/\/$/, "");
+            const { origin, hostname, protocol } = window.location;
+            if (hostname.endsWith(".app.github.dev") || hostname.endsWith(".githubpreview.dev")) {
+                return origin.replace(/-(\d+)\.app\.github\.dev$/, "-8080.app.github.dev")
+                    .replace(/-(\d+)\.githubpreview\.dev$/, "-8080.githubpreview.dev") + "/api";
+            }
+            return `${protocol}//${hostname}:8080/api`;
+        }
+        const API_BASE_URL = resolveApiBaseUrl();
+
+        function authHeaders() {
+            const token = localStorage.getItem("token");
+            return {
+                "Content-Type": "application/json",
+                ...(token ? { Authorization: `Bearer ${token}` } : {})
+            };
+        }
+    </script>
+    <script src="../JS/GestionProducto.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="../CSS/styledash.css">
+</head>
+
+<body>
+  <div class="container my-4">
+    <div class="sala-header">
+      <div>
+        <span id="lastUpdate"></span>
+        <span id="refresh-countdown" style="font-size:.72rem;color:#94a3b8;margin-left:8px;"></span>
+      </div>
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        <button class="btn-add-mesa" id="btnAbrirAnadir">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+            stroke-linecap="round">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          Añadir Mesa
+        </button>
+        <button class="btn btn-sm btn-outline-secondary rounded-pill px-3" id="btnRefresh">↺ Actualizar</button>
+      </div>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2 mb-3">
+      <span class="badge" style="background:#dcfce7;color:#15803d;border:1px solid #4ade80;padding:5px 11px;">●
+        Disponible</span>
+      <span class="badge" style="background:#fef9c3;color:#a16207;border:1px solid #facc15;padding:5px 11px;">●
+        Ocupada</span>
+      <span class="badge" style="background:#e2e8f0;color:#475569;border:1px solid #94a3b8;padding:5px 11px;">●
+        Reservada</span>
+      <span class="badge" style="background:#fee2e2;color:#dc2626;border:1px solid #f87171;padding:5px 11px;">● Fuera de
+        Servicio</span>
+    </div>
+
+    <div id="salaContainer">
+      <div class="sala-loading">
+        <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+        Cargando mesas…
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL — Añadir Mesa -->
+  <div class="modal fade" id="modalAnadir" tabindex="-1" aria-labelledby="modalAnadirLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border-radius:16px;border:none;box-shadow:0 20px 60px rgba(27,58,87,.18);">
+        <div class="modal-header" style="background:#1b3a57;border-radius:16px 16px 0 0;">
+          <h5 class="modal-title text-white" id="modalAnadirLabel">Nueva Mesa</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div id="addError" class="alert alert-danger py-2 mb-3"
+            style="display:none;font-size:.85rem;border-radius:10px;"></div>
+          <div class="row g-3">
+            <div class="col-12 col-md-5">
+              <label class="form-label fw-semibold" style="font-size:.83rem;color:#1b3a57;">
+                Código de mesa <span class="text-danger">*</span>
+              </label>
+              <input type="text" class="form-control" id="inputCodigo" placeholder="Ej: A1, B3" maxlength="10"
+                style="border-radius:10px;border:1px solid #c9daef;font-size:.9rem;">
+              <div class="form-text" style="font-size:.75rem;">Se guardará en mayúsculas.</div>
+            </div>
+            <div class="col-12 col-md-7">
+              <label class="form-label fw-semibold" style="font-size:.83rem;color:#1b3a57;">
+                Ubicación <span class="text-danger">*</span>
+              </label>
+              <select class="form-select" id="inputUbicacion"
+                style="border-radius:10px;border:1px solid #c9daef;font-size:.9rem;">
+                <option value="interior">Interior</option>
+                <option value="exterior">Exterior</option>
+              </select>
+            </div>
+          </div>
+          <div class="mt-3 p-3 rounded-3"
+            style="background:#f0fdf4;border:1px solid #bbf7d0;font-size:.82rem;color:#15803d;">
+            ✅ La mesa se creará con estado <strong>Disponible</strong> y quedará lista para recibir pedidos.
+          </div>
+        </div>
+        <div class="modal-footer" style="border-top:1px solid #e2e8f0;">
+          <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3"
+            data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-sm rounded-pill px-4" id="btnGuardarMesa"
+            style="background:#1b3a57;color:#fff;font-weight:700;">Guardar mesa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL — Confirmar Fuera de Servicio -->
+  <div class="modal fade" id="modalFuera" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border-radius:16px;border:none;box-shadow:0 20px 60px rgba(220,38,38,.18);">
+        <div class="modal-header" style="background:#dc2626;border-radius:16px 16px 0 0;">
+          <h5 class="modal-title text-white">Fuera de Servicio</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL — Confirmar Eliminar -->
+  <div class="modal fade" id="modalEliminar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content" style="border-radius:16px;border:none;box-shadow:0 20px 60px rgba(0,0,0,.15);">
+        <div class="modal-header" style="background:#6b7280;border-radius:16px 16px 0 0;">
+          <h5 class="modal-title text-white" style="font-size:.95rem;">Eliminar Mesa</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center" style="padding:20px;">
+          <p style="font-size:.88rem;color:#475569;margin:0;">
+            ¿Eliminar <strong id="eliminarModalNombre">—</strong>?<br>
+            <span style="color:#9ca3af;font-size:.8rem;">Esta acción no se puede deshacer.</span>
+          </p>
+        </div>
+        <div class="modal-footer justify-content-center" style="border-top:1px solid #e2e8f0;">
+          <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3"
+            data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" id="btnConfirmarEliminar" class="btn btn-danger btn-sm rounded-pill px-3"
+            style="font-weight:700;">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index:1200">
+    <div id="toastSala" class="toast align-items-center text-white border-0" role="alert" aria-atomic="true"
+      style="border-radius:12px;min-width:260px;">
+      <div class="d-flex">
+        <div class="toast-body fw-semibold" id="toastMsg">OK</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+
+  <script>
+
+    function resolveApiBaseUrl() {
+      const override = window.__API_BASE_URL__ || localStorage.getItem("apiBaseUrl");
+      if (override) {
+        return override.replace(/\/$/, "");
+      }
+
+      const { origin, hostname, protocol } = window.location;
+
+      if (hostname.endsWith(".app.github.dev") || hostname.endsWith(".githubpreview.dev")) {
+        return origin.replace(/-(\d+)\.app\.github\.dev$/, "-8080.app.github.dev").replace(/-(\d+)\.githubpreview\.dev$/, "-8080.githubpreview.dev") + "/api";
+      }
+
+      return `${protocol}//${hostname}:8080/api`;
+    }
+
+    const API = `${resolveApiBaseUrl()}/mesas`;
+    const AUTO_REFRESH_MS = 10 * 60 * 1000;
+
+    function authHeaders() {
+      const token = localStorage.getItem("token");
+      return {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {})
+      };
+    }
+
+    const modalAnadir = new bootstrap.Modal(document.getElementById("modalAnadir"));
+    const modalFuera = new bootstrap.Modal(document.getElementById("modalFuera"));
+    const modalEliminar = new bootstrap.Modal(document.getElementById("modalEliminar"));
+
+    const toastEl = document.getElementById("toastSala");
+    const toastBS = new bootstrap.Toast(toastEl, { delay: 3000 });
+
+    function toast(msg, color = "#1b3a57") {
+      document.getElementById("toastMsg").textContent = msg;
+      toastEl.style.background = color;
+      toastBS.show();
+    }
+
+    // ════════════════════════════════════════════════════
+    // ESTADO LOCAL
+    // ════════════════════════════════════════════════════
+    let mesas = [];
+    let pending = null; // { tipo, id, codigo }
+
+    // ════════════════════════════════════════════════════
+    // NORMALIZAR ESTADO → clase CSS
+    // ════════════════════════════════════════════════════
+    function normEstado(raw) {
+      const e = (raw || "").toLowerCase().replace(/[\s-]/g, "_");
+      if (e === "libre" || e === "disponible") return "disponible";
+      if (e === "ocupada" || e === "ocupado") return "ocupada";
+      if (e === "reservada" || e === "reservado") return "reservada";
+      if (e.includes("fuera") || e.includes("servicio")) return "fuera";
+      return "disponible";
+    }
+
+    const ETIQ = { disponible: "Disponible", ocupada: "Ocupada", reservada: "Reservada", fuera: "Fuera de Servicio" };
+
+    // ════════════════════════════════════════════════════
+    // CARGAR MESAS DESDE LA API
+    // ════════════════════════════════════════════════════
+    async function cargarMesas() {
+      document.getElementById("salaContainer").innerHTML = `
+    <div class="sala-loading">
+      <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+      Cargando mesas…
+    </div>`;
+
+      try {
+        const res = await fetch(`${API}/estado`, { headers: authHeaders() });
+        if (!res.ok) throw new Error(`Error ${res.status}`);
+        mesas = await res.json();
+        renderSala();
+        document.getElementById("lastUpdate").textContent =
+          `Actualizado: ${new Date().toLocaleTimeString("es-PE")}`;
+      } catch (err) {
+        document.getElementById("salaContainer").innerHTML = `
+      <div class="sala-error">
+        ⚠️ No se pudo conectar con el backend.<br>
+        <small>${err.message}</small>
+      </div>`;
+      }
+    }
+    function renderSala() {
+      const container = document.getElementById("salaContainer");
+
+      if (mesas.length === 0) {
+        container.innerHTML = `
+      <div class="sala-empty">
+        No hay mesas registradas.<br>
+        <small>Usa el botón <strong>+ Añadir Mesa</strong> para crear la primera.</small>
+      </div>`;
+        return;
+      }
+
+      // Agrupar por ubicación
+      const grupos = {};
+      mesas.forEach(m => {
+        const ub = (m.ubicacion || "sin ubicación").toLowerCase().trim();
+        if (!grupos[ub]) grupos[ub] = [];
+        grupos[ub].push(m);
+      });
+
+      const orden = ["interior", "exterior"];
+      const ubs = [
+        ...orden.filter(u => grupos[u]),
+        ...Object.keys(grupos).filter(u => !orden.includes(u))
+      ];
+
+      let html = "";
+      ubs.forEach(ub => {
+        const lista = grupos[ub];
+        const titulo = ub.charAt(0).toUpperCase() + ub.slice(1);
+
+        html += `
+      <div class="section-title">
+        🪑 ${titulo}
+        <small style="font-weight:400;color:#94a3b8;font-size:.76rem;">
+          (${lista.length} mesa${lista.length !== 1 ? "s" : ""})
+        </small>
+      </div>
+      <div class="row g-3 mb-2">`;
+
+        lista.forEach(m => {
+          const est = normEstado(m.estado);
+          const etiq = ETIQ[est];
+
+          // Botones: solo Fuera de servicio | Liberar | Eliminar
+          // El flujo de pedido a cocina ocurre dentro de MesaDetalle
+          const canFuera = est !== "fuera";
+          const canLiberar = est !== "disponible";
+
+          html += `
+        <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+          <div class="card mesa ${est}" id="mesa-${m.id}">
+            <div class="card-body p-2 d-flex flex-column gap-2">
+ 
+              <!-- Link a detalle de mesa — aquí se gestiona el pedido a cocina -->
+              <a href="MesaDetalle.html?mesa=${encodeURIComponent(m.codigo)}&mesaId=${m.id}"
+                 class="mesa-link">MESA ${m.codigo}</a>
+ 
+              <span class="mesa-badge">${etiq}</span>
+ 
+              <!-- Fuera de servicio -->
+              <div class="mesa-actions">
+                <button class="btn-ac btn-fuera"
+                  data-id="${m.id}" data-codigo="${m.codigo}" data-tipo="fuera"
+                  ${canFuera ? "" : "disabled"}
+                  title="${canFuera ? "Marcar como Fuera de Servicio" : "Ya está fuera de servicio"}">
+                  Fuera
+                </button>
+              </div>
+ 
+              <!-- Liberar -->
+              ${canLiberar ? `
+              <button class="btn-ac btn-liberar"
+                data-id="${m.id}" data-codigo="${m.codigo}" data-tipo="liberar"
+                title="Liberar → Disponible">
+                Liberar
+              </button>` : ""}
+ 
+              <!-- Eliminar -->
+              <button class="btn-eliminar"
+                data-id="${m.id}" data-codigo="${m.codigo}" data-tipo="eliminar"
+                title="Eliminar esta mesa">
+                Eliminar mesa
+              </button>
+ 
+            </div>
+          </div>
+        </div>`;
+        });
+
+        html += `</div>`;
+      });
+
+      container.innerHTML = html;
+      bindBotones();
+    }
+
+    // ════════════════════════════════════════════════════
+    // BIND BOTONES DE LAS TARJETAS
+    // ════════════════════════════════════════════════════
+    function bindBotones() {
+      document.querySelectorAll(".btn-ac:not([disabled]), .btn-eliminar").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const { id, codigo, tipo } = btn.dataset;
+          pending = { id: parseInt(id), codigo };
+
+          if (tipo === "fuera") {
+            await cambiarEstado(parseInt(id), "fuera_servicio", ` Mesa ${codigo} marcada como Fuera de Servicio.`, "#dc2626");
+            pending = null;
+          } else if (tipo === "liberar") {
+            cambiarEstado(parseInt(id), "libre", ` Mesa ${codigo} ya esta disponible.`, "#16a34a");
+          } else if (tipo === "eliminar") {
+            document.getElementById("eliminarModalNombre").textContent = `Mesa ${codigo}`;
+            modalEliminar.show();
+          }
+        });
+      });
+    }
+
+    // ════════════════════════════════════════════════════
+    // CAMBIAR ESTADO EN LA API Y RE-RENDER
+    // ════════════════════════════════════════════════════
+    async function cambiarEstado(id, nuevoEstado, msgOk, colorOk = "#1b3a57") {
+      try {
+        const res = await fetch(`${API}/${id}/estado`, {
+          method: "PUT",
+          headers: authHeaders(),
+          body: JSON.stringify({ estado: nuevoEstado })
+        });
+        if (!res.ok) throw new Error(await res.text());
+
+        const data = await res.json();
+        const idx = mesas.findIndex(m => m.id === id);
+        if (idx !== -1) mesas[idx] = { ...mesas[idx], estado: data.estado };
+
+        renderSala();
+        toast(msgOk, colorOk);
+        document.getElementById("lastUpdate").textContent =
+          `Actualizado: ${new Date().toLocaleTimeString("es-PE")}`;
+      } catch (err) {
+        toast(`Error: ${err.message}`, "#dc2626");
+      }
+    }
+
+    // ════════════════════════════════════════════════════
+    // CONFIRMAR ELIMINAR
+    // ════════════════════════════════════════════════════
+    document.getElementById("btnConfirmarEliminar").addEventListener("click", async () => {
+      if (!pending) return;
+      const { id, codigo } = pending;
+      const btn = document.getElementById("btnConfirmarEliminar");
+
+      btn.disabled = true;
+      btn.textContent = "Eliminando…";
+
+      try {
+        const res = await fetch(`${API}/${id}`, {
+          method: "DELETE",
+          headers: authHeaders()
+        });
+        if (!res.ok) throw new Error(await res.text());
+
+        mesas = mesas.filter(m => m.id !== id);
+        modalEliminar.hide();
+        renderSala();
+        toast(`🗑 Mesa ${codigo} eliminada.`, "#6b7280");
+      } catch (err) {
+        toast(`Error: ${err.message}`, "#dc2626");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Eliminar";
+        pending = null;
+      }
+    });
+
+    // ════════════════════════════════════════════════════
+    // AÑADIR MESA
+    // ════════════════════════════════════════════════════
+    document.getElementById("btnAbrirAnadir").addEventListener("click", () => {
+      document.getElementById("inputCodigo").value = "";
+      document.getElementById("inputUbicacion").value = "interior";
+      document.getElementById("addError").style.display = "none";
+      modalAnadir.show();
+    });
+
+    document.getElementById("btnGuardarMesa").addEventListener("click", async () => {
+      const codigo = document.getElementById("inputCodigo").value.trim().toUpperCase();
+      const ubicacion = document.getElementById("inputUbicacion").value;
+      const errorEl = document.getElementById("addError");
+      const btn = document.getElementById("btnGuardarMesa");
+
+      errorEl.style.display = "none";
+
+      if (!codigo) {
+        errorEl.textContent = "El código de la mesa es obligatorio.";
+        errorEl.style.display = "block";
+        document.getElementById("inputCodigo").focus();
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Guardando…";
+
+      try {
+        const res = await fetch(API, {
+          method: "POST",
+          headers: authHeaders(),
+          body: JSON.stringify({ codigo, ubicacion })
+        });
+
+        if (!res.ok) {
+          const msg = await res.text();
+          throw new Error(msg || `Error ${res.status}`);
+        }
+
+        const nueva = await res.json();
+        mesas.push({ ...nueva, estado: nueva.estado || "libre" });
+        modalAnadir.hide();
+        renderSala();
+        toast(`✅ Mesa ${nueva.codigo} creada correctamente.`, "#16a34a");
+        document.getElementById("lastUpdate").textContent =
+          `Actualizado: ${new Date().toLocaleTimeString("es-PE")}`;
+
+      } catch (err) {
+        errorEl.textContent = err.message;
+        errorEl.style.display = "block";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Guardar mesa";
+      }
+    });
+
+    // ════════════════════════════════════════════════════
+    // ESCUCHAR RESERVA DESDE PÁGINA PÚBLICA
+    // ════════════════════════════════════════════════════
+    window.addEventListener("message", e => {
+      if (e.data?.type === "reserva_confirmada") {
+        const idx = mesas.findIndex(m => m.id === e.data.mesaId);
+        if (idx !== -1) {
+          mesas[idx].estado = "reservada";
+          renderSala();
+          toast("📅 Mesa reservada desde la página pública.", "#475569");
+        }
+        setTimeout(cargarMesas, 3000);
+      }
+    });
+
+
+    // ════════════════════════════════════════════════════
+    // INIT
+    // ════════════════════════════════════════════════════
+    document.getElementById("btnRefresh").addEventListener("click", cargarMesas);
+    cargarMesas();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle de Mesa</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="../CSS/styledash.css">
+</head>
+
+<body>
+  <div class="container my-4">
+    <div class="mesa-detail-hero mb-4">
+      <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+        <div>
+          <h2 id="mesa-title" class="mb-1">Cargando…</h2>
+          <p class="mb-0 text-muted" style="font-size:.85rem">
+            Selecciona productos por categoría y envía el pedido a cocina.
+          </p>
+        </div>
+        <a href="Gestion DeSala.html" class="btn btn-light fw-semibold">← Volver a Sala</a>
+      </div>
+    </div>
+
+    <div class="row g-4 align-items-start">
+      <!-- Ticket -->
+      <div class="col-12 col-lg-4">
+        <div class="card ticket-card h-100">
+          <div class="card-header ticket-header d-flex justify-content-between align-items-center">
+            <span>🧾 Ticket</span>
+            <button id="clear-ticket" type="button" class="btn btn-sm btn-outline-light">Limpiar</button>
+          </div>
+          <div class="card-body ticket-body">
+            <div class="ticket-meta mb-3">
+              <div><strong>Mesa:</strong> <span id="ticket-mesa">—</span></div>
+              <div><strong>Items:</strong> <span id="ticket-count">0</span></div>
+            </div>
+            <div id="ticket-empty" class="ticket-empty">No hay productos agregados.</div>
+            <div id="ticket-items" class="ticket-items"></div>
+          </div>
+          <div class="card-footer ticket-footer">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span>Total</span>
+              <strong id="ticket-total">S/ 0.00</strong>
+            </div>
+
+            <!-- BOTÓN ENVIAR A COCINA -->
+            <button class="btn-send-kitchen" id="btnEnviarCocina" disabled>
+              Enviar a Cocina
+            </button>
+
+            <!-- Feedback inline -->
+            <div id="kitchen-feedback" class="mt-2"
+              style="display:none; font-size:.82rem; border-radius:8px; padding:8px 12px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Categorías + Productos -->
+      <div class="col-12 col-lg-8">
+        <div class="card category">
+          <div class="card-header category-bar" id="categoryBar">
+            <span id="productosCargando">
+              <span class="spinner-border spinner-border-sm me-1" role="status"></span>
+              Cargando menú…
+            </span>
+          </div>
+          <div class="card-body category-body" id="categoryBody">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+  <script>
+    // ── Config ─────────────────────────────────────────────────
+    function resolveApiBaseUrl() {
+      const override = window.__API_BASE_URL__ || localStorage.getItem("apiBaseUrl");
+      if (override) {
+        return override.replace(/\/$/, "");
+      }
+
+      const { origin, hostname, protocol } = window.location;
+
+      if (hostname.endsWith(".app.github.dev") || hostname.endsWith(".githubpreview.dev")) {
+        return origin.replace(/-(\d+)\.app\.github\.dev$/, "-8080.app.github.dev").replace(/-(\d+)\.githubpreview\.dev$/, "-8080.githubpreview.dev") + "/api";
+      }
+
+      return `${protocol}//${hostname}:8080/api`;
+    }
+
+    const API_BASE = resolveApiBaseUrl();
+    const API_PRODUCTOS = `${API_BASE}/productos`;
+    const API_PEDIDOS = `${API_BASE}/pedidos`;
+    const API_MESAS = `${API_BASE}/mesas`;
+
+
+    // ── Parámetros de URL ──────────────────────────────────────
+    const params = new URLSearchParams(window.location.search);
+    const mesaCod = params.get("mesa") || "—";
+    const mesaId = parseInt(params.get("mesaId") || "0", 10); // opcional, por si se pasa
+
+    document.getElementById("mesa-title").textContent = `MESA ${mesaCod}`;
+    document.getElementById("ticket-mesa").textContent = mesaCod;
+
+    // ── Auth headers ───────────────────────────────────────────
+    function authHeaders() {
+      const token = localStorage.getItem("token");
+      return {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {})
+      };
+    }
+
+    // ── Normalización de categorías ────────────────────────────
+    function normalizarCategoria(nombre) {
+      const n = (nombre || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+      if (n.includes("piqueo") || n.includes("entrada")) return "Piqueos y Entradas";
+      if (n.includes("sandwich")) return "Sándwiches";
+      if (n.includes("fondo") || n.includes("plato")) return "Platos de Fondo";
+      if (n.includes("postre")) return "Postres";
+      if (n.includes("bebida")) return "Bebidas";
+      return nombre || "Otros";
+    }
+
+    // ── Ticket ─────────────────────────────────────────────────
+    const ticketState = new Map(); // id → { nombre, precio, cantidad }
+    const fmt = v => `S/ ${Number(v).toFixed(2)}`;
+
+    function renderTicket() {
+      const itemsEl = document.getElementById("ticket-items");
+      const emptyEl = document.getElementById("ticket-empty");
+      const countEl = document.getElementById("ticket-count");
+      const totalEl = document.getElementById("ticket-total");
+      const sendBtn = document.getElementById("btnEnviarCocina");
+
+      itemsEl.innerHTML = "";
+
+      if (!ticketState.size) {
+        emptyEl.style.display = "block";
+        countEl.textContent = "0";
+        totalEl.textContent = "S/ 0.00";
+        sendBtn.disabled = true;
+        return;
+      }
+
+      emptyEl.style.display = "none";
+      let total = 0, count = 0;
+
+      ticketState.forEach(item => {
+        total += item.precio * item.cantidad;
+        count += item.cantidad;
+
+        const row = document.createElement("div");
+        row.className = "ticket-item";
+        row.innerHTML = `
+          <div>
+            <div class="ticket-item-name">${item.nombre}</div>
+            <div class="ticket-item-meta">${fmt(item.precio)} × ${item.cantidad}</div>
+          </div>
+          <strong>${fmt(item.precio * item.cantidad)}</strong>`;
+        itemsEl.appendChild(row);
+      });
+
+      countEl.textContent = String(count);
+      totalEl.textContent = fmt(total);
+      sendBtn.disabled = false;
+    }
+
+    // ── Feedback inline ────────────────────────────────────────
+    function showFeedback(msg, tipo = "success") {
+      const el = document.getElementById("kitchen-feedback");
+      el.textContent = msg;
+      el.style.display = "block";
+      el.style.background = tipo === "success" ? "#d1fae5" : "#fee2e2";
+      el.style.color = tipo === "success" ? "#065f46" : "#991b1b";
+      el.style.border = `1px solid ${tipo === "success" ? "#6ee7b7" : "#fca5a5"}`;
+    }
+
+    function hideFeedback() {
+      document.getElementById("kitchen-feedback").style.display = "none";
+    }
+
+    // ── Buscar mesaId real por código si no viene en la URL ───
+    let resolvedMesaId = mesaId || null;
+
+    async function resolveMesaId() {
+      if (resolvedMesaId) return resolvedMesaId;
+      try {
+        const res = await fetch(`${API_MESAS}/estado`, { headers: authHeaders() });
+        if (!res.ok) return null;
+        const mesas = await res.json();
+        const found = mesas.find(m => m.codigo === mesaCod);
+        if (found) resolvedMesaId = found.id;
+      } catch { 
+        
+       }
+      return resolvedMesaId;
+    }
+
+    // ── Enviar pedido a cocina ─────────────────────────────────
+    document.getElementById("btnEnviarCocina").addEventListener("click", async () => {
+      if (!ticketState.size) return;
+
+      const btn = document.getElementById("btnEnviarCocina");
+      btn.disabled = true;
+      btn.textContent = "⏳ Enviando…";
+      hideFeedback();
+
+      try {
+        const idMesa = await resolveMesaId();
+        if (!idMesa) throw new Error("No se pudo identificar la mesa. Verifica que el backend esté encendido.");
+
+        const items = Array.from(ticketState.values()).map(item => ({
+          productoId: item.id,
+          cantidad: item.cantidad,
+          precioUnitario: item.precio
+        }));
+
+        const total = Array.from(ticketState.values())
+          .reduce((s, i) => s + i.precio * i.cantidad, 0);
+
+        const payload = {
+          tipoPedido: "presencial",
+          mesaId: idMesa,
+          items,
+          total
+        };
+
+        const res = await fetch(API_PEDIDOS, {
+          method: "POST",
+          headers: authHeaders(),
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) {
+          const txt = await res.text();
+          throw new Error(txt || `Error ${res.status}`);
+        }
+
+        const data = await res.json();
+        showFeedback(`✅ Pedido #${data.id} enviado a cocina. La mesa queda marcada como Ocupada.`, "success");
+
+        // Limpiar ticket
+        ticketState.clear();
+        renderTicket();
+
+      } catch (err) {
+        showFeedback(`❌ ${err.message}`, "danger");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = "🍳 Enviar a Cocina";
+      }
+    });
+
+    // ── Render menú desde API ──────────────────────────────────
+    async function cargarProductos() {
+      const categoryBar = document.getElementById("categoryBar");
+      const categoryBody = document.getElementById("categoryBody");
+
+      try {
+        const res = await fetch(API_PRODUCTOS, { headers: authHeaders() });
+        if (!res.ok) throw new Error(`Error ${res.status}`);
+        const productos = await res.json();
+
+        // Agrupar por categoría normalizada (solo disponibles)
+        const grupos = {};
+        productos.filter(p => p.disponible).forEach(p => {
+          const cat = normalizarCategoria(p.categoria?.nombre);
+          if (!grupos[cat]) grupos[cat] = [];
+          grupos[cat].push(p);
+        });
+
+        const cats = Object.keys(grupos).sort();
+
+        if (!cats.length) {
+          categoryBar.innerHTML = `<span style="color:#64748b;font-size:.88rem">No hay productos disponibles.</span>`;
+          categoryBody.innerHTML = "";
+          return;
+        }
+
+        // Tabs
+        categoryBar.innerHTML = cats.map((cat, i) => `
+          <button type="button" class="btn category-tab${i === 0 ? " active" : ""}" data-target="${i}">
+            ${cat}
+          </button>`).join("");
+
+        // Paneles
+        categoryBody.innerHTML = cats.map((cat, i) => {
+          const items = grupos[cat];
+          const btns = items.map(p => `
+            <button type="button" class="btn product-btn"
+              data-id="${p.id}" data-name="${p.nombre.replace(/"/g, '&quot;')}" data-price="${p.precio}">
+              ${p.nombre}
+              <span>${fmt(p.precio)}</span>
+            </button>`).join("");
+
+          return `
+            <div class="category-panel${i === 0 ? " active" : ""}" data-panel="${i}">
+              <div class="product-grid">${btns}</div>
+            </div>`;
+        }).join("");
+
+        // Eventos tabs
+        categoryBar.querySelectorAll(".category-tab").forEach(tab => {
+          tab.addEventListener("click", () => {
+            categoryBar.querySelectorAll(".category-tab").forEach(t => t.classList.remove("active"));
+            categoryBody.querySelectorAll(".category-panel").forEach(p => p.classList.remove("active"));
+            tab.classList.add("active");
+            categoryBody.querySelector(`[data-panel="${tab.dataset.target}"]`)?.classList.add("active");
+          });
+        });
+
+        // Eventos botones de producto — con contador +/−
+        categoryBody.querySelectorAll(".product-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const id = parseInt(btn.dataset.id);
+            const nombre = btn.dataset.name;
+            const precio = parseFloat(btn.dataset.price);
+
+            if (ticketState.has(id)) {
+              ticketState.get(id).cantidad += 1;
+            } else {
+              ticketState.set(id, { id, nombre, precio, cantidad: 1 });
+            }
+            renderTicket();
+          });
+        });
+
+      } catch (err) {
+        categoryBar.innerHTML = `<span style="color:#dc2626;font-size:.85rem">Error al cargar productos: ${err.message}</span>`;
+        categoryBody.innerHTML = "";
+      }
+    }
+
+    // ── Limpiar ticket ─────────────────────────────────────────
+    document.getElementById("clear-ticket").addEventListener("click", () => {
+      ticketState.clear();
+      renderTicket();
+      hideFeedback();
+    });
+
+    // ── Init ───────────────────────────────────────────────────
+    renderTicket();
+    cargarProductos();
+    resolveMesaId(); // pre-resolver el ID
+
+  </script>
+</body>
+
+</html>

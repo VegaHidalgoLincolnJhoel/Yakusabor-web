@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Mozos — Yaku Sabor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../CSS/styledash.css" />
+    <style>
+        :root { --navy:#1b3a57; --navy-light:#2f5b84; --accent:#f0a500; --radius:14px; }
+        body { font-family:'Plus Jakarta Sans','Trebuchet MS',sans-serif; background:#f4f7fa; color:var(--navy); }
+
+        /* ── Header ── */
+        .gm-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:22px; }
+        .gm-title  { display:flex; align-items:center; gap:10px; }
+        .gm-icon   { width:42px; height:42px; border-radius:10px; background:#e8f1fb; display:flex; align-items:center; justify-content:center; font-size:1.3rem; }
+        .gm-title h1 { font-size:1.35rem; font-weight:800; margin:0; }
+        .gm-title p  { font-size:.82rem; color:#6b7b8a; margin:0; }
+        .btn-primary-gm {
+            background:var(--navy); color:#fff; border:none; border-radius:999px;
+            padding:9px 20px; font-size:.88rem; font-weight:700; cursor:pointer;
+            display:inline-flex; align-items:center; gap:7px; transition:.15s;
+        }
+        .btn-primary-gm:hover { background:var(--navy-light); }
+        .btn-danger-gm {
+            background:transparent; color:#dc2626; border:1.5px solid #fca5a5;
+            border-radius:999px; padding:9px 20px; font-size:.88rem; font-weight:700;
+            cursor:pointer; display:inline-flex; align-items:center; gap:7px; transition:.15s;
+        }
+        .btn-danger-gm:hover  { background:#fee2e2; }
+        .btn-danger-gm.active { background:#fee2e2; border-color:#dc2626; }
+
+        /* ── KPI strip ── */
+        .gm-kpi-strip { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-bottom:22px; }
+        .gm-kpi { background:#fff; border:1px solid #e2e8f0; border-radius:var(--radius); padding:16px 18px; display:flex; align-items:center; gap:14px; }
+        .gm-kpi-icon { width:44px; height:44px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
+        .ic-blue   { background:#e8f1fb; }
+        .ic-green  { background:#dcfce7; }
+        .ic-purple { background:#f3e8ff; }
+        .ic-orange { background:#fef3c7; }
+        .gm-kpi-body .lbl { font-size:.73rem; color:#6b7b8a; margin-bottom:2px; }
+        .gm-kpi-body .val { font-size:1.45rem; font-weight:800; color:var(--navy); line-height:1; }
+        .gm-kpi-body .sub { font-size:.68rem; color:#94a3b8; margin-top:3px; }
+
+        /* ── Filtros ── */
+        .gm-filter-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+        .gm-filter-btn { border:none; border-radius:999px; padding:7px 18px; font-size:.83rem; font-weight:600; cursor:pointer; background:#e2e8f0; color:#475569; transition:.15s; }
+        .gm-filter-btn.active { background:var(--navy); color:#fff; }
+        .gm-date { margin-left:auto; font-size:.8rem; color:#6b7b8a; display:flex; align-items:center; gap:5px; }
+
+        /* ── Modal CREAR MOZO ── */
+        .gm-modal-overlay { display:none; position:fixed; inset:0; background:rgba(10,20,40,.55); z-index:3000; align-items:center; justify-content:center; }
+        .gm-modal-overlay.show { display:flex; }
+        .gm-modal { background:#fff; border-radius:18px; width:min(95vw,480px); box-shadow:0 24px 80px rgba(0,0,0,.22); overflow:hidden; }
+        .gm-modal-header { background:var(--navy); color:#fff; padding:18px 24px; display:flex; justify-content:space-between; align-items:center; }
+        .gm-modal-header h2 { font-size:1rem; margin:0; font-weight:700; }
+        .gm-modal-close { background:transparent; border:none; color:#fff; font-size:1.3rem; cursor:pointer; }
+        .gm-modal-body { padding:22px 24px; }
+        .gm-field { display:flex; flex-direction:column; gap:4px; margin-bottom:14px; }
+        .gm-field label { font-size:.77rem; font-weight:600; color:#475569; }
+        .gm-field input, .gm-field select {
+            border:1px solid #c9daef; border-radius:8px; padding:9px 12px;
+            font-size:.88rem; outline:none; font-family:inherit; transition:.15s;
+        }
+        .gm-field input:focus, .gm-field select:focus { border-color:var(--navy); box-shadow:0 0 0 3px rgba(27,58,87,.1); }
+        .gm-modal-footer { padding:14px 24px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px; }
+        .btn-cancel { background:transparent; border:1px solid #e2e8f0; border-radius:8px; padding:9px 18px; font-size:.85rem; cursor:pointer; color:#6b7b8a; transition:.15s; }
+        .btn-cancel:hover { background:#f1f5f9; }
+        .btn-save { background:var(--navy); color:#fff; border:none; border-radius:8px; padding:9px 22px; font-size:.85rem; font-weight:700; cursor:pointer; transition:.15s; }
+        .btn-save:hover { background:var(--navy-light); }
+        .btn-save:disabled { opacity:.6; cursor:not-allowed; }
+        .gm-error { color:#dc2626; font-size:.78rem; margin-top:6px; display:none; }
+        .gm-error.show { display:block; }
+
+        /* ── Tabla ── */
+        .gm-card { background:#fff; border:1px solid #e2e8f0; border-radius:var(--radius); overflow:hidden; }
+        .gm-table-wrap { overflow-x:auto; }
+        .gm-table { width:100%; border-collapse:collapse; font-size:.88rem; }
+        .gm-table thead th { background:#f8fafc; color:#64748b; font-size:.73rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:11px 16px; border-bottom:2px solid #e2e8f0; white-space:nowrap; }
+        .gm-table tbody tr { border-bottom:1px solid #f1f5f9; transition:.12s; }
+        .gm-table tbody tr:hover { background:#f8fafc; }
+        .gm-table td { padding:12px 16px; vertical-align:middle; }
+
+        /* Avatar */
+        .mozo-avatar { width:36px; height:36px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:.78rem; color:#fff; margin-right:9px; vertical-align:middle; flex-shrink:0; }
+        .mozo-name { font-weight:600; color:var(--navy); }
+        .mozo-email { font-size:.72rem; color:#94a3b8; display:block; }
+        .pct-badge { font-size:.72rem; font-weight:700; color:#16a34a; margin-left:7px; }
+
+        /* Estado */
+        .badge-activo   { background:#dcfce7; color:#15803d; border-radius:999px; padding:4px 11px; font-size:.73rem; font-weight:700; }
+        .badge-inactivo { background:#f1f5f9; color:#94a3b8; border-radius:999px; padding:4px 11px; font-size:.73rem; font-weight:700; }
+
+        /* Acciones */
+        .btn-toggle { border:1px solid #c9daef; background:#fff; color:#2f5b84; border-radius:8px; padding:4px 10px; cursor:pointer; font-size:.78rem; transition:.15s; margin-right:5px; }
+        .btn-toggle:hover { background:#e8f1fb; }
+        .btn-del { border:1px solid #fca5a5; background:#fff; color:#dc2626; border-radius:8px; padding:4px 10px; cursor:pointer; font-size:.78rem; transition:.15s; }
+        .btn-del:hover { background:#fee2e2; }
+
+        /* Toast */
+        .gm-toast { position:fixed; bottom:24px; right:24px; background:var(--navy); color:#fff; border-radius:10px; padding:12px 20px; font-size:.88rem; font-weight:600; box-shadow:0 8px 24px rgba(0,0,0,.18); opacity:0; transform:translateY(12px); transition:.3s; pointer-events:none; z-index:9999; }
+        .gm-toast.show { opacity:1; transform:translateY(0); }
+        .gm-toast.error { background:#dc2626; }
+
+        /* Spinner */
+        .spin { width:18px; height:18px; border:2.5px solid #dbe3ea; border-top-color:var(--navy); border-radius:50%; animation:spin .7s linear infinite; display:inline-block; vertical-align:middle; margin-right:8px; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+
+        /* Barra de búsqueda */
+        .gm-search { border:1px solid #c9daef; border-radius:999px; padding:7px 16px; font-size:.85rem; outline:none; width:220px; transition:.15s; font-family:inherit; }
+        .gm-search:focus { border-color:var(--navy); box-shadow:0 0 0 3px rgba(27,58,87,.1); }
+    </style>
+</head>
+
+<body>
+<div style="padding:24px 28px;">
+
+    <!-- ── Header ─────────────────────────────── -->
+    <div class="gm-header">
+        <div class="gm-title">
+            <div class="gm-icon">👥</div>
+            <div>
+                <h1>Gestión de Mozos</h1>
+                <p>Administra los mozos y consulta su desempeño.</p>
+            </div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+            <input class="gm-search" id="searchInput" placeholder="🔍 Buscar mozo…" />
+            <button class="btn-primary-gm" id="btnAbrirModal">+ Agregar Mozo</button>
+            <button class="btn-danger-gm"  id="btnModoEliminar">🗑 Eliminar Mozo</button>
+        </div>
+    </div>
+
+    <!-- ── KPI strip ──────────────────────────── -->
+    <div class="gm-kpi-strip">
+        <div class="gm-kpi">
+            <div class="gm-kpi-icon ic-blue">💵</div>
+            <div class="gm-kpi-body">
+                <div class="lbl">Ventas Totales del Día</div>
+                <div class="val" id="kpiVentas">—</div>
+                <div class="sub">Total generado por todos los mozos hoy</div>
+            </div>
+        </div>
+        <div class="gm-kpi">
+            <div class="gm-kpi-icon ic-green">👤</div>
+            <div class="gm-kpi-body">
+                <div class="lbl">Mozos Activos</div>
+                <div class="val" id="kpiActivos">—</div>
+                <div class="sub">Mozos con estado activo</div>
+            </div>
+        </div>
+        <div class="gm-kpi">
+            <div class="gm-kpi-icon ic-purple">🪑</div>
+            <div class="gm-kpi-body">
+                <div class="lbl">Mesas Atendidas Hoy</div>
+                <div class="val" id="kpiMesas">—</div>
+                <div class="sub">Total de mesas en la jornada</div>
+            </div>
+        </div>
+        <div class="gm-kpi">
+            <div class="gm-kpi-icon ic-orange">📈</div>
+            <div class="gm-kpi-body">
+                <div class="lbl">Promedio por Mozo</div>
+                <div class="val" id="kpiProm">—</div>
+                <div class="sub">Según el período seleccionado</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Filtros ────────────────────────────── -->
+    <div class="gm-filter-row">
+        <span style="font-size:.8rem;color:#6b7b8a;font-weight:600;">Ver promedio por:</span>
+        <button class="gm-filter-btn active" data-period="semana">Semana</button>
+        <button class="gm-filter-btn" data-period="mes">Mes</button>
+        <button class="gm-filter-btn" data-period="año">Año</button>
+        <div class="gm-date">📅 <span id="dateLabel">—</span></div>
+    </div>
+
+    <!-- ── Tabla ──────────────────────────────── -->
+    <div class="gm-card">
+        <div class="gm-table-wrap">
+            <table class="gm-table">
+                <thead>
+                    <tr>
+                        <th>Mozo</th>
+                        <th>Ventas del Día</th>
+                        <th>Mesas Atendidas</th>
+                        <th>Promedio</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="mozosBody">
+                    <tr><td colspan="6" style="text-align:center;padding:32px;color:#94a3b8;">
+                        <span class="spin"></span>Cargando mozos desde la base de datos…
+                    </td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MODAL — AGREGAR MOZO
+══════════════════════════════════════════ -->
+<div class="gm-modal-overlay" id="modalOverlay">
+    <div class="gm-modal">
+        <div class="gm-modal-header">
+            <h2>➕ Agregar Nuevo Mozo</h2>
+            <button class="gm-modal-close" id="modalClose">✕</button>
+        </div>
+        <div class="gm-modal-body">
+            <div class="gm-field">
+                <label>Nombre completo *</label>
+                <input type="text" id="inNombre" placeholder="Ej: Carlos Ramírez" />
+            </div>
+            <div class="gm-field">
+                <label>Correo electrónico *</label>
+                <input type="email" id="inEmail" placeholder="Ej: carlos@yakusabor.com" />
+            </div>
+            <div class="gm-field">
+                <label>Contraseña *</label>
+                <input type="password" id="inPassword" placeholder="Mínimo 6 caracteres" />
+            </div>
+            <div class="gm-field">
+                <label>Turno *</label>
+                <select id="inTurno">
+                    <option value="Mañana">Mañana</option>
+                    <option value="Tarde" selected>Tarde</option>
+                    <option value="Noche">Noche</option>
+                </select>
+            </div>
+            <div class="gm-error" id="modalError">Error al agregar el mozo.</div>
+        </div>
+        <div class="gm-modal-footer">
+            <button class="btn-cancel" id="modalCancel">Cancelar</button>
+            <button class="btn-save"   id="modalSave">💾 Guardar Mozo</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="gm-toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════
+//  CONFIGURACIÓN
+// ══════════════════════════════════════════════════
+function resolveApiBaseUrl() {
+    const override = window.__API_BASE_URL__ || localStorage.getItem('apiBaseUrl');
+    if (override) {
+        return override.replace(/\/$/, '');
+    }
+
+    const { origin, hostname, protocol } = window.location;
+
+    if (hostname.endsWith('.app.github.dev') || hostname.endsWith('.githubpreview.dev')) {
+        return origin.replace(/-(\d+)\.app\.github\.dev$/, '-8080.app.github.dev').replace(/-(\d+)\.githubpreview\.dev$/, '-8080.githubpreview.dev') + '/api';
+    }
+
+    return `${protocol}//${hostname}:8080/api`;
+}
+
+const API = `${resolveApiBaseUrl()}/usuarios/meseros`;
+
+const COLORES = ['#1b3a57','#2f5b84','#e07b00','#16a34a','#7c3aed','#dc2626','#0891b2','#0f766e','#b45309'];
+
+// ── Auth helpers ─────────────────────────────────
+function authHeaders() {
+    const t = localStorage.getItem('token');
+    return { 'Content-Type':'application/json', ...(t ? {Authorization:`Bearer ${t}`} : {}) };
+}
+
+// ── Formateo ─────────────────────────────────────
+const fmt = v => new Intl.NumberFormat('es-PE',{style:'currency',currency:'PEN',minimumFractionDigits:2}).format(Number(v)||0);
+
+function initiales(nombre) {
+    return (nombre||'?').split(' ').slice(0,2).map(p => (p[0]||'').toUpperCase()).join('');
+}
+function colorFor(idx) { return COLORES[idx % COLORES.length]; }
+
+// ── Toast ─────────────────────────────────────────
+function showToast(msg, tipo='ok', ms=2800) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'gm-toast show' + (tipo==='error' ? ' error' : '');
+    setTimeout(() => el.classList.remove('show'), ms);
+}
+
+// ── Estado local ─────────────────────────────────
+let todosLosMozos = [];    // array cargado desde el backend
+let modoEliminar  = false;
+
+// ══════════════════════════════════════════════════
+//  CARGA DESDE EL BACKEND
+// ══════════════════════════════════════════════════
+async function cargarMozos() {
+    document.getElementById('mozosBody').innerHTML =
+        `<tr><td colspan="6" style="text-align:center;padding:32px;color:#94a3b8;">
+            <span class="spin"></span>Cargando…
+        </td></tr>`;
+
+    try {
+        const res = await fetch(API, { headers: authHeaders() });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        todosLosMozos = await res.json();
+    } catch (err) {
+        document.getElementById('mozosBody').innerHTML =
+            `<tr><td colspan="6" style="text-align:center;padding:32px;color:#dc2626;">
+                ⚠️ No se pudo conectar con el backend.<br>
+                <small style="color:#94a3b8;">${err.message}</small>
+            </td></tr>`;
+        showToast('Error al cargar mozos.', 'error');
+        return;
+    }
+
+    renderTabla();
+    renderKpis();
+}
+
+// ══════════════════════════════════════════════════
+//  RENDER TABLA
+// ══════════════════════════════════════════════════
+function renderTabla(filtro = '') {
+    const tbody = document.getElementById('mozosBody');
+
+    const lista = filtro
+        ? todosLosMozos.filter(m => (m.nombre||'').toLowerCase().includes(filtro.toLowerCase())
+                                 || (m.email||'').toLowerCase().includes(filtro.toLowerCase()))
+        : todosLosMozos;
+
+    if (!lista.length) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:32px;color:#94a3b8;">
+            No hay mozos registrados.
+        </td></tr>`;
+        return;
+    }
+
+    const totalV = lista.reduce((s, m) => s + (m.ventasDia||0), 0);
+
+    tbody.innerHTML = lista.map((m, idx) => {
+        const pct    = totalV > 0 ? ((m.ventasDia||0)/totalV*100).toFixed(1) : '0.0';
+        const activo = m.activo !== false;
+
+        return `
+        <tr data-id="${m.id}">
+            <td>
+                <span class="mozo-avatar" style="background:${colorFor(idx)}">${initiales(m.nombre)}</span>
+                <span>
+                    <span class="mozo-name">${esc(m.nombre)}</span>
+                    <span class="mozo-email">${esc(m.email||'')}</span>
+                </span>
+            </td>
+            <td>
+                <strong>${fmt(m.ventasDia||0)}</strong>
+                <span class="pct-badge">${pct}%</span>
+            </td>
+            <td>${m.mesas||0} <span style="color:#94a3b8;font-size:.75rem">· ${esc(m.turno||'—')}</span></td>
+            <td>${fmt(m.promedio||0)}</td>
+            <td>
+                <span class="${activo?'badge-activo':'badge-inactivo'}">
+                    ${activo?'● Activo':'● Inactivo'}
+                </span>
+            </td>
+            <td>
+                <button class="btn-toggle"
+                    onclick="toggleActivo(${m.id}, ${!activo})"
+                    title="${activo?'Desactivar mozo':'Activar mozo'}">
+                    ${activo?'⏸ Desactivar':'▶ Activar'}
+                </button>
+                ${modoEliminar
+                    ? `<button class="btn-del"
+                          onclick="eliminarMozo(${m.id}, '${esc(m.nombre)}')"
+                          title="Eliminar permanentemente">
+                          🗑 Eliminar
+                       </button>`
+                    : ''
+                }
+            </td>
+        </tr>`;
+    }).join('');
+}
+
+// ══════════════════════════════════════════════════
+//  RENDER KPIs
+// ══════════════════════════════════════════════════
+function renderKpis() {
+    const activos = todosLosMozos.filter(m => m.activo !== false);
+    const totalV  = todosLosMozos.reduce((s, m) => s + (m.ventasDia||0), 0);
+    const totalM  = todosLosMozos.reduce((s, m) => s + (m.mesas||0), 0);
+    const prom    = activos.length ? totalV / activos.length : 0;
+
+    document.getElementById('kpiVentas').textContent  = fmt(totalV);
+    document.getElementById('kpiActivos').textContent = activos.length;
+    document.getElementById('kpiMesas').textContent   = totalM;
+    document.getElementById('kpiProm').textContent    = fmt(prom);
+}
+
+// ══════════════════════════════════════════════════
+//  CREAR MOZO — POST al backend
+// ══════════════════════════════════════════════════
+document.getElementById('btnAbrirModal').addEventListener('click', abrirModal);
+document.getElementById('modalClose').addEventListener('click', cerrarModal);
+document.getElementById('modalCancel').addEventListener('click', cerrarModal);
+document.getElementById('modalOverlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('modalOverlay')) cerrarModal();
+});
+
+function abrirModal() {
+    limpiarModal();
+    document.getElementById('modalOverlay').classList.add('show');
+    document.getElementById('inNombre').focus();
+}
+function cerrarModal() {
+    document.getElementById('modalOverlay').classList.remove('show');
+    limpiarModal();
+}
+function limpiarModal() {
+    document.getElementById('inNombre').value   = '';
+    document.getElementById('inEmail').value    = '';
+    document.getElementById('inPassword').value = '';
+    document.getElementById('inTurno').value    = 'Tarde';
+    ocultarErrorModal();
+}
+function mostrarErrorModal(msg) {
+    const el = document.getElementById('modalError');
+    el.textContent = msg;
+    el.classList.add('show');
+}
+function ocultarErrorModal() {
+    document.getElementById('modalError').classList.remove('show');
+}
+
+document.getElementById('modalSave').addEventListener('click', async () => {
+    const nombre   = document.getElementById('inNombre').value.trim();
+    const email    = document.getElementById('inEmail').value.trim();
+    const password = document.getElementById('inPassword').value.trim();
+    const turno    = document.getElementById('inTurno').value;
+
+    ocultarErrorModal();
+
+    if (!nombre)          { mostrarErrorModal('El nombre es obligatorio.');       return; }
+    if (!email)           { mostrarErrorModal('El correo es obligatorio.');        return; }
+    if (!email.includes('@')) { mostrarErrorModal('Ingresa un correo válido.');   return; }
+    if (password.length < 6) { mostrarErrorModal('La contraseña debe tener al menos 6 caracteres.'); return; }
+
+    const btn = document.getElementById('modalSave');
+    btn.disabled = true;
+    btn.textContent = 'Guardando…';
+
+    try {
+        const res = await fetch(API, {
+            method: 'POST',
+            headers: authHeaders(),
+            body: JSON.stringify({ nombre, email, password, turno })
+        });
+
+        const data = await res.text();
+
+        if (!res.ok) {
+            mostrarErrorModal(data || `Error ${res.status}`);
+            return;
+        }
+
+        showToast(`✅ Mozo "${nombre}" creado correctamente.`);
+        cerrarModal();
+        await cargarMozos();   // recargar desde la BD
+
+    } catch (err) {
+        mostrarErrorModal('No se pudo conectar con el servidor.');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '💾 Guardar Mozo';
+    }
+});
+
+// ══════════════════════════════════════════════════
+//  ELIMINAR MOZO — DELETE al backend
+// ══════════════════════════════════════════════════
+document.getElementById('btnModoEliminar').addEventListener('click', () => {
+    modoEliminar = !modoEliminar;
+    const btn = document.getElementById('btnModoEliminar');
+    btn.classList.toggle('active', modoEliminar);
+    btn.textContent = modoEliminar ? '✕ Cancelar eliminación' : '🗑 Eliminar Mozo';
+    renderTabla(document.getElementById('searchInput').value);
+});
+
+window.eliminarMozo = async function(id, nombre) {
+    if (!confirm(`¿Estás seguro de que deseas eliminar permanentemente a "${nombre}"?\n\nEsta acción no se puede deshacer.`)) return;
+
+    try {
+        const res = await fetch(`${API}/${id}`, {
+            method: 'DELETE',
+            headers: authHeaders()
+        });
+        if (!res.ok) {
+            const msg = await res.text();
+            showToast(`Error: ${msg}`, 'error');
+            return;
+        }
+        showToast(`🗑 "${nombre}" eliminado de la base de datos.`);
+        await cargarMozos();
+    } catch {
+        showToast('No se pudo conectar con el servidor.', 'error');
+    }
+};
+
+// ══════════════════════════════════════════════════
+//  ACTIVAR / DESACTIVAR — PUT al backend
+// ══════════════════════════════════════════════════
+window.toggleActivo = async function(id, nuevoValor) {
+    try {
+        const res = await fetch(`${API}/${id}/activo`, {
+            method: 'PUT',
+            headers: authHeaders(),
+            body: JSON.stringify({ activo: nuevoValor })
+        });
+        if (!res.ok) throw new Error(await res.text());
+
+        // Actualizar localmente sin recargar todo
+        const m = todosLosMozos.find(x => x.id === id);
+        if (m) m.activo = nuevoValor;
+        renderTabla(document.getElementById('searchInput').value);
+        renderKpis();
+        showToast(`✅ Mozo ${nuevoValor?'activado':'desactivado'} correctamente.`);
+    } catch {
+        showToast('Error al actualizar el estado.', 'error');
+    }
+};
+
+// ══════════════════════════════════════════════════
+//  BÚSQUEDA EN TIEMPO REAL
+// ══════════════════════════════════════════════════
+document.getElementById('searchInput').addEventListener('input', e => {
+    renderTabla(e.target.value);
+});
+
+// ══════════════════════════════════════════════════
+//  FILTROS DE PERÍODO
+// ══════════════════════════════════════════════════
+document.querySelectorAll('.gm-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.gm-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        setDateLabel(btn.dataset.period);
+    });
+});
+
+function setDateLabel(period) {
+    const now = new Date();
+    if (period === 'semana') {
+        const start = new Date(now); start.setDate(now.getDate()-6);
+        document.getElementById('dateLabel').textContent =
+            `${start.toLocaleDateString('es-PE')} - ${now.toLocaleDateString('es-PE')}`;
+    } else if (period === 'mes') {
+        document.getElementById('dateLabel').textContent =
+            now.toLocaleDateString('es-PE',{month:'long',year:'numeric'});
+    } else {
+        document.getElementById('dateLabel').textContent = now.getFullYear().toString();
+    }
+}
+
+// ── Escape HTML ────────────────────────────────────
+function esc(v) {
+    return String(v??'')
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// ══════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════
+setDateLabel('semana');
+cargarMozos();
+</script>
+</body>
+</html>
