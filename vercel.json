@@ -1,9 +1,15 @@
 {
   "redirects": [
-    {
-      "source": "/",
-      "destination": "/Frontend/Principal/HTML/index.html",
-      "permanent": false
-    }
+    { "source": "/", "destination": "/Frontend/Principal/HTML/index.html", "permanent": false },
+    { "source": "/index", "destination": "/Frontend/Principal/HTML/index.html", "permanent": false },
+    { "source": "/index.html", "destination": "/Frontend/Principal/HTML/index.html", "permanent": false },
+    { "source": "/menu", "destination": "/Frontend/Principal/HTML/menu.html", "permanent": false },
+    { "source": "/menu.html", "destination": "/Frontend/Principal/HTML/menu.html", "permanent": false },
+    { "source": "/reservas", "destination": "/Frontend/Principal/HTML/reservas.html", "permanent": false },
+    { "source": "/reservas.html", "destination": "/Frontend/Principal/HTML/reservas.html", "permanent": false },
+    { "source": "/contacto", "destination": "/Frontend/Principal/HTML/Contacto.html", "permanent": false },
+    { "source": "/Contacto.html", "destination": "/Frontend/Principal/HTML/Contacto.html", "permanent": false },
+    { "source": "/dashboard", "destination": "/Frontend/Dashboard/HTML/Dashboard.html", "permanent": false },
+    { "source": "/Dashboard.html", "destination": "/Frontend/Dashboard/HTML/Dashboard.html", "permanent": false }
   ]
 }
