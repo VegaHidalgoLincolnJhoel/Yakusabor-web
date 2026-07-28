@@ -28,7 +28,7 @@
 }
 
 body {
-    padding-top: 80px;
+    padding-top: 65px !important;
     font-family: 'Plus Jakarta Sans', sans-serif;
     /* Fondo brisa de mar y arena tibia */
     background: linear-gradient(180deg, #eef9fb 0%, #f6fcfb 35%, #fffaf2 70%, #fefae0 100%) !important;
@@ -41,24 +41,27 @@ body {
 /* 🌊 NAVBAR COSTA Y PLAYA */
 /* ========================================== */
 .navbar {
-    background: rgba(3, 43, 58, 0.96) !important;
-    padding: 0.6rem 2.5rem !important;
-    transition: all 0.4s ease !important;
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
-    border-bottom: 3px solid var(--sand-golden) !important;
-    box-shadow: 0 8px 25px rgba(3, 43, 58, 0.25) !important;
+    background: rgba(3, 43, 58, 0.95) !important;
+    padding: 0.4rem 2rem !important;
+    min-height: 65px !important;
+    height: auto !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: 2px solid var(--sand-golden) !important;
+    box-shadow: 0 4px 15px rgba(3, 43, 58, 0.2) !important;
 }
 
 .navbar.navbar-scrolled {
     background: rgba(255, 255, 255, 0.96) !important;
-    border-bottom: 3px solid var(--sea-turquoise) !important;
-    box-shadow: 0 10px 30px rgba(5, 68, 94, 0.15) !important;
+    border-bottom: 2px solid var(--sea-turquoise) !important;
+    box-shadow: 0 4px 20px rgba(5, 68, 94, 0.12) !important;
 }
 
 .navbar-brand img {
-    width: 210px !important;
-    max-width: 100%;
+    height: 40px !important;
+    width: auto !important;
+    max-width: 170px !important;
+    object-fit: contain !important;
     transition: transform 0.3s ease !important;
 }
 
