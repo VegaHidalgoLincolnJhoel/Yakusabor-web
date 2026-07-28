@@ -1,0 +1,17 @@
+{
+    "cleanUrls": true,
+    "rewrites": [
+      { "source": "/", "destination": "/Frontend/Principal/HTML/index.html" },
+      { "source": "/index.html", "destination": "/Frontend/Principal/HTML/index.html" },
+      { "source": "/menu.html", "destination": "/Frontend/Principal/HTML/menu.html" },
+      { "source": "/reservas.html", "destination": "/Frontend/Principal/HTML/reservas.html" },
+      { "source": "/Contacto.html", "destination": "/Frontend/Principal/HTML/Contacto.html" },
+      { "source": "/img/menu.png", "destination": "/Frontend/Principal/img/menu.png" },
+      { "source": "/img/reservas.png", "destination": "/Frontend/Principal/img/reservas.png" },
+      { "source": "/img/Contacto.png", "destination": "/Frontend/Principal/img/Contacto.png" },
+      { "source": "/img/logo.png", "destination": "/Frontend/Principal/img/logo.png" },
+      { "source": "/img/pizza.png", "destination": "/Frontend/Principal/img/pizza.png" },
+      { "source": "/img/soda.png", "destination": "/Frontend/Principal/img/soda.png" },
+      { "source": "/img/wine.png", "destination": "/Frontend/Principal/img/wine.png" }
+    ]
+  }
