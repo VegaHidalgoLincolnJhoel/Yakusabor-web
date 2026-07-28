@@ -774,3 +774,65 @@ body {
       color: #94a3b8;
       display: inline-block;
     }
+
+/* ========================================== */
+/* 🌊 DISEÑO MARINO FRESCO Y MODERNO - DASHBOARD */
+/* ========================================== */
+.restaurant-card {
+    background: linear-gradient(160deg, #011b29 0%, #004d66 100%) !important;
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    box-shadow: 0 20px 40px rgba(1, 27, 41, 0.25);
+    border-radius: 24px !important;
+}
+
+.left-options .btn-pdf {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 242, 254, 0.25);
+    border-radius: 50px !important;
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.left-options .btn-pdf:hover {
+    background: linear-gradient(135deg, #00f2fe, #006d8f) !important;
+    color: #ffffff !important;
+    border-color: #ffffff;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(0, 242, 254, 0.35);
+}
+
+.card-panel {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 168, 201, 0.18);
+    border-radius: 20px !important;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 8px 25px rgba(1, 42, 58, 0.06);
+}
+
+.card-panel:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 16px 35px rgba(0, 168, 201, 0.18);
+    border-color: #00f2fe;
+}
+
+.ticket-card {
+    border-radius: 24px !important;
+    border: 1px solid rgba(0, 168, 201, 0.2);
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+}
+
+.ticket-header {
+    background: linear-gradient(135deg, #011b29, #006d8f) !important;
+}
+
+.category-tab {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.category-tab.active {
+    background: linear-gradient(135deg, #00a8c9, #006d8f) !important;
+    box-shadow: 0 6px 18px rgba(0, 168, 201, 0.35);
+}
