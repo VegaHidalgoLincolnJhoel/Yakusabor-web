@@ -635,3 +635,83 @@ body {
         font-size: 2.5rem !important;
     }
 }
+
+/* ========================================== */
+/* 🌊 ESTILOS ESPECÍFICOS POR PÁGINA (VIDA & ARENA) */
+/* ========================================== */
+
+/* 1. VISTA DE MENÚ (CARTA MARINA TURQUESA & SOL) */
+.Fondo-Menu {
+    min-height: 100vh;
+    background: linear-gradient(135deg, rgba(3, 43, 58, 0.94) 0%, rgba(0, 139, 139, 0.88) 100%), url('../../img/ceviche.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: fixed !important;
+    color: #ffffff;
+    padding-bottom: 4rem;
+}
+
+/* 2. VISTA DE RESERVAS (ATARDECER EN LA PLAYA) */
+.Fondo-Reservas {
+    min-height: 100vh;
+    background: linear-gradient(135deg, rgba(3, 43, 58, 0.93) 0%, rgba(231, 111, 81, 0.82) 100%), url('../../img/local.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: fixed !important;
+    color: #ffffff;
+    padding-bottom: 4rem;
+}
+
+/* 3. VISTA DE CONTACTO (BRISA MARINA & SOL DE PLAYA) */
+.Fondo-Contacto {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #eef9fb 0%, #e0f2f7 40%, #fdf6ed 70%, #fefae0 100%) !important;
+    color: #032b3a;
+    padding-bottom: 4rem;
+}
+
+/* TARJETAS DE CONTACTO E INFORMACIÓN DE UBICACIÓN */
+.contact-card {
+    background: #ffffff !important;
+    border: 2px solid var(--sand-golden) !important;
+    border-radius: 24px !important;
+    box-shadow: var(--shadow-coastal) !important;
+    padding: 2.2rem !important;
+    transition: all 0.35s ease !important;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: var(--shadow-beach) !important;
+}
+
+.info-box-marine {
+    background: linear-gradient(135deg, var(--sea-turquoise), var(--sea-navy));
+    color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 20px;
+    border: 2px solid var(--sand-golden);
+    box-shadow: 0 10px 25px rgba(5, 68, 94, 0.15);
+}
+
+/* BADGES FLOTANTES DE PLAYA */
+.beach-badge {
+    display: inline-block;
+    background: var(--sand-golden);
+    color: var(--sea-deep);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.35rem 0.9rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba(233, 196, 106, 0.35);
+    margin-bottom: 0.8rem;
+}
+
+.beach-badge-coral {
+    background: linear-gradient(135deg, var(--sunset-coral), var(--sunset-orange));
+    color: #ffffff;
+}
+

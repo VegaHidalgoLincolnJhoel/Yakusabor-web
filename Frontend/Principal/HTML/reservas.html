@@ -12,7 +12,7 @@
 
 <body>
     <!-- Navbar -->
-    <div class="Fondo">
+    <div class="Fondo-Reservas">
         <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
             <div class="container-fluid">
                 <a class="navbar-brand" href="index.html">
@@ -122,14 +122,26 @@
         </div>
 
         <!--Zona de reservas-->
-        <div class="container text-center mb-4">
-            <h1 class="display-4">Reserva tu mesa</h1>
-            <p class="lead">¡Asegura tu lugar en Yaku Sabor! Reserva tu mesa con anticipación para disfrutar de una
-                experiencia culinaria inolvidable.</p>
-            <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal"
-                data-bs-target="#reservaMesasModal">
-                Reservar Ahora
-            </button>
+        <div class="container text-center pt-4 pb-5">
+            <span class="beach-badge beach-badge-coral">🌅 Experiencia Gastronómica Marina</span>
+            <h1 class="titulo-carta mb-3">Reserva Tu Mesa En La Playa</h1>
+            <p class="lead max-w-700 mx-auto mb-4" style="color: var(--sand-warm);">
+                ¡Asegura tu lugar frente al mar en Yaku Sabor! Disfruta de nuestros cebiches frescos, causa marina y el mejor ambiente costero.
+            </p>
+            <div class="row justify-content-center my-4">
+                <div class="col-md-8">
+                    <div class="card overflow-hidden shadow-lg border-0 rounded-4">
+                        <img src="../../../img/local.png" alt="Ambiente de Yaku Sabor" class="img-fluid" style="height: 320px; object-fit: cover;">
+                        <div class="card-body bg-white p-4">
+                            <h4 class="fw-bold mb-2" style="color: var(--sea-deep);">Mesas con vista y terraza marina</h4>
+                            <p class="text-muted mb-3">Ambiente climatizado, terraza al aire libre y atención personalizada.</p>
+                            <button type="button" class="btn btn-primary btn-lg px-5 py-3 shadow" data-bs-toggle="modal" data-bs-target="#reservaMesasModal">
+                                🪑 Seleccionar Mesa y Reservar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="modal fade" id="reservaMesasModal" tabindex="-1" aria-labelledby="reservaMesasModalLabel"

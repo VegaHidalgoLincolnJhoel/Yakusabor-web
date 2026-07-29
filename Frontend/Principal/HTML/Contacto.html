@@ -11,8 +11,9 @@
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
+    <div class="Fondo-Contacto">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html">
                 <img src="../../../img/ICON1.png" alt="logo" id="navLogo" data-logo-default="../../../img/ICON1.png"
@@ -128,40 +129,49 @@
     </div>
 
     <main class="container my-5 pt-5">
-        <h1 class="text-center mb-5">Conócenos y escríbenos</h1>
+        <div class="text-center mb-5">
+            <span class="beach-badge">📍 Encuéntranos frente al mar</span>
+            <h1 class="titulo-carta text-dark mb-2" style="font-size: 2.6rem;">Conócenos y Escríbenos</h1>
+            <p class="section-subtitle text-muted">Estamos listos para atenderte con la mejor sazón marina. ¡Envíanos tu consulta o visítanos!</p>
+        </div>
         <div class="row g-5 align-items-center">
             <div class="col-md-6">
-                <!-- agregar conexion con backend aqui: enviar formulario de contacto a la API -->
-                <form id="contactForm" class="p-4 bg-white rounded shadow-sm">
-                    <div class="mb-3">
-                        <label for="nombreContacto" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombreContacto" placeholder="Tu nombre completo"
-                            required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="emailContacto" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="emailContacto" placeholder="tu@correo.com"
-                            required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="mensajeContacto" class="form-label">Mensaje</label>
-                        <textarea class="form-control" id="mensajeContacto" rows="4"
-                            placeholder="¿En qué te podemos ayudar?" required></textarea>
-                    </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="terminosContacto" required>
-                        <label class="form-check-label" for="terminosContacto">Acepto términos y condiciones</label>
-                    </div>
-                    <!-- agregar conexion con este componente aqui: registrar envío y respuesta del backend -->
-                    <button type="submit" class="btn btn-primary w-100">Enviar Mensaje</button>
-                </form>
+                <div class="contact-card">
+                    <h4 class="fw-bold mb-4" style="color: var(--sea-deep);">Envíanos un mensaje</h4>
+                    <form id="contactForm">
+                        <div class="mb-3">
+                            <label for="nombreContacto" class="form-label fw-semibold">Nombre Completo</label>
+                            <input type="text" class="form-control" id="nombreContacto" placeholder="Ej. Carlos Rodríguez" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="emailContacto" class="form-label fw-semibold">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="emailContacto" placeholder="tu@correo.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mensajeContacto" class="form-label fw-semibold">Mensaje</label>
+                            <textarea class="form-control" id="mensajeContacto" rows="4" placeholder="¿Deseas consultar sobre eventos, reservas especiales o el menú?" required></textarea>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="terminosContacto" required>
+                            <label class="form-check-label small" for="terminosContacto">Acepto términos y política de privacidad</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-3">Enviar Mensaje Marino</button>
+                    </form>
+                </div>
             </div>
             <div class="col-md-6 text-center">
-                <h4 class="mb-4">Nuestra Ubicación</h4>
-                <iframe src="https://maps.google.com/maps?q=Lima,Peru&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%"
-                    height="350" style="border:0; border-radius: 15px;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
+                <div class="info-box-marine text-start mb-4">
+                    <h5 class="fw-bold text-white mb-2">🏖️ Yaku Sabor Restaurante Marino</h5>
+                    <p class="mb-1 text-white-50"><strong class="text-white">Dirección:</strong> Av. Costanera 450, Miraflores, Lima - Perú</p>
+                    <p class="mb-1 text-white-50"><strong class="text-white">Horario:</strong> Lunes a Domingo: 11:00 AM - 10:00 PM</p>
+                    <p class="mb-0 text-white-50"><strong class="text-white">Teléfono / WhatsApp:</strong> +51 987 654 321</p>
+                </div>
+                <div class="contact-card p-2">
+                    <iframe src="https://maps.google.com/maps?q=Lima,Peru&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%"
+                        height="320" style="border:0; border-radius: 18px;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
             </div>
         </div>
     </main>
