@@ -44,10 +44,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // ── Público (sin token) ──
                         .requestMatchers("/", "/api/auth/login", "/api/auth/registro").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/productos/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/productos", "/api/productos/**").permitAll()
+                        .requestMatchers(HttpMethod.HEAD, "/api/productos", "/api/productos/**", "/").permitAll()
 
                         // ── Mesas: lectura pública (el cliente necesita verlas al pedir) ──
-                        .requestMatchers(HttpMethod.GET, "/api/mesas/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/mesas", "/api/mesas/**").permitAll()
+                        .requestMatchers(HttpMethod.HEAD, "/api/mesas", "/api/mesas/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/mesas/**")
                         .hasAnyRole("MESERO", "Mesero", "mesero", "ADMINISTRADOR", "Administrador", "administrador")
                         .requestMatchers(HttpMethod.PUT, "/api/mesas/**")
