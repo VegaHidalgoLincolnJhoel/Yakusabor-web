@@ -94,7 +94,9 @@ public class SecurityConfig {
                 "https://localhost:*",
                 "https://127.0.0.1:*",
                 "https://*.app.github.dev",
-                "https://*.githubpreview.dev"));
+                "https://*.githubpreview.dev",
+                "https://*.vercel.app",
+                "https://*.onrender.com"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowCredentials(true);
