@@ -6,11 +6,11 @@
 /* 🌊 SISTEMA DE DISEÑO DASHBOARD EJECUTIVO  */
 /* ========================================== */
 :root {
-    --dash-deep: #001524;        /* Azul Profundo Marino Sidebar */
-    --dash-navy: #003355;        /* Azul Marino Elegante */
-    --dash-gold: #E5A93C;        /* Dorado Arena Vibrante */
-    --dash-surface: #F5F8FA;     /* Fondo Brisa Fresca */
-    --dash-card: #FFFFFF;        /* Tarjetas Blancas Puras */
+    --dash-deep: #111111;        /* Charcoal Dark Sidebar */
+    --dash-navy: #1A1A1A;        /* Dark Navbar/Sidebar Base */
+    --dash-gold: #C9A96E;        /* Miramar Gold */
+    --dash-surface: #FEFAF3;     /* Cream Background */
+    --dash-card: #FFFFFF;        /* Pure white for cards */
     
     --dash-cyan: #00A8CC;        /* Aqua Vibrante Accent */
     --dash-teal: #05B292;        /* Estado Libre / Verde */
