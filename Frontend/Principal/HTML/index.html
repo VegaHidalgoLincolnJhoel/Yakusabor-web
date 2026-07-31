@@ -1,22 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yaku Sabor — Cevichería & Cocina Nikkei | Lima, Perú</title>
+    <meta name="description" content="Yaku Sabor: la mejor cevichería y cocina Nikkei de Lima. Pescados frescos del día, ceviches artesanales y fusión peruano-japonesa frente al mar en Miraflores.">
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="../CSS/style.css">
-    <title>Yaku Sabor - restaurant </title>
+    <!-- FontAwesome & Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="../CSS/style.css?v=5">
 </head>
 
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
-        <div class="container-fluid">
+    <!-- ══ NAVBAR TRANSPARENTE ══ -->
+    <nav class="navbar navbar-expand-lg" id="mainNavbar">
+        <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="../../../img/ICON1.png" alt="logo" id="navLogo" data-logo-default="../../../img/ICON1.png"
+                <img src="../../../img/ICON1.png" alt="Yaku Sabor" id="navLogo"
+                    data-logo-default="../../../img/ICON1.png"
                     data-logo-scroll="../../../img/icon2.png" />
             </a>
 
@@ -28,37 +35,35 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="index.html">INICIO</a>
+                        <a class="nav-link active" href="index.html">INICIO</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="menu.html">MENÚ</a>
+                        <a class="nav-link" href="menu.html">CARTA</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="reservas.html">RESERVAS</a>
+                        <a class="nav-link" href="reservas.html">RESERVAS</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="Contacto.html">CONTACTO</a>
+                        <a class="nav-link" href="Contacto.html">CONTACTO</a>
                     </li>
                 </ul>
                 <div class="navbar-actions">
-                    <button type="button" class="nav-link nav-register-btn" aria-label="Registro" data-bs-toggle="modal"
-                        data-bs-target="#registroModal">
-                        <img src="../../../img/register1.png" alt="Registrar"
-                            class="nav-register-image nav-register-default"
+                    <button type="button" class="nav-register-btn" aria-label="Iniciar Sesión"
+                        data-bs-toggle="modal" data-bs-target="#registroModal">
+                        <img src="../../../img/register1.png" alt="Iniciar Sesión"
+                            class="nav-register-image"
                             data-register-default="../../../img/register1.png"
                             data-register-scroll="../../../img/register2.png" />
-                        <span>Inicia Sesión</span>
+                        <span>Iniciar Sesión</span>
                     </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- ========================================== -->
-    <!-- MODAL DE INICIO DE SESIÓN -->
-    <!-- ========================================== -->
+    <!-- ══ MODAL LOGIN ══ -->
     <div class="modal fade" id="registroModal" tabindex="-1" aria-labelledby="registroModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="registroModalLabel">Iniciar Sesión</h5>
@@ -66,34 +71,36 @@
                 </div>
                 <div class="modal-body">
                     <form id="loginForm">
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <label for="exampleInputEmail1" class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="tuemail@ejemplo.com" required>
+                            </div>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="••••••••" required>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+                        <button type="submit" class="btn btn-primary w-100">Ingresar a Yaku Sabor</button>
                     </form>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <a href="#" class="text-decoration-none text-muted small">¿Olvidaste tu contraseña?</a>
-                    <!-- AQUÍ CAMBIAMOS EL ENLACE PARA QUE ABRA EL MODAL DE REGISTRO -->
-                    <a href="#" id="linkToRegister" class="text-decoration-none small">
-                        ¿No tienes cuenta? <strong>Regístrate</strong>
+                    <a href="#" class="text-decoration-none small" style="color: var(--yk-gray);">¿Olvidaste tu contraseña?</a>
+                    <a href="#" id="linkToRegister" class="text-decoration-none small" style="color: var(--yk-gold-dk); font-weight: 600;">
+                        Crear cuenta →
                     </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- NUEVO MODAL DE REGISTRO DE USUARIO -->
-    <!-- ========================================== -->
-    <div class="modal fade" id="crearCuentaModal" tabindex="-1" aria-labelledby="crearCuentaModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
+    <!-- ══ MODAL REGISTRO ══ -->
+    <div class="modal fade" id="crearCuentaModal" tabindex="-1" aria-labelledby="crearCuentaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="crearCuentaModalLabel">Crear Cuenta</h5>
@@ -103,103 +110,79 @@
                     <form id="registerForm">
                         <div class="mb-3">
                             <label for="regNombre" class="form-label">Nombre completo</label>
-                            <input type="text" class="form-control" id="regNombre" required>
+                            <input type="text" class="form-control" id="regNombre" placeholder="Juan Pérez" required>
                         </div>
                         <div class="mb-3">
                             <label for="regEmail" class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control" id="regEmail" required>
+                            <input type="email" class="form-control" id="regEmail" placeholder="juan@ejemplo.com" required>
                         </div>
                         <div class="mb-3">
                             <label for="regPassword" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="regPassword" required>
+                            <input type="password" class="form-control" id="regPassword" placeholder="Mínimo 6 caracteres" required>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <label for="regConfirmPassword" class="form-label">Confirmar Contraseña</label>
-                            <input type="password" class="form-control" id="regConfirmPassword" required>
+                            <input type="password" class="form-control" id="regConfirmPassword" placeholder="Repite tu contraseña" required>
                         </div>
-                        <button type="submit" class="btn btn-success w-100">Registrarse</button>
+                        <button type="submit" class="btn btn-primary w-100">Crear mi Cuenta</button>
                     </form>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
-                    <!-- ENLACE PARA VOLVER AL LOGIN -->
-                    <a href="#" id="linkToLogin" class="text-decoration-none small">
-                        ¿Ya tienes cuenta? <strong>Inicia sesión</strong>
+                    <a href="#" id="linkToLogin" class="text-decoration-none small" style="color: var(--yk-gold-dk); font-weight: 600;">
+                        ¿Ya tienes cuenta? Inicia sesión
                     </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!--Imagen central-->
-    <div class="banner">
-        <img src="../../../img/local.png" class="img-fluid" alt="...">
-    </div>
-
-    <!--Acerca de Nosotros-->
-    <div class="container text-center my-5">
-        <span class="beach-badge">🌊 Auténtica Sazón Marina & Criolla</span>
-        <h1 class="display-4 text-dark mb-3">Bienvenidos a Yaku Sabor</h1>
-        <p class="lead max-w-700 mx-auto text-muted">En Yaku Sabor, nos apasiona ofrecerte una experiencia culinaria única frente al mar que celebra la riqueza de la gastronomía peruana y la frescura marina.</p>
-        <div class="row justify-content-center g-4 my-3 text-start">
-            <div class="col-md-4">
-                <div class="info-box-marine text-center h-100">
-                    <h5 class="fw-bold text-white mb-2">🐟 Pescados & Mariscos Frescos</h5>
-                    <p class="small text-white-50 mb-0">Ingredientes seleccionados diariamente desde el puerto a tu mesa para garantizar el sabor original.</p>
-                </div>
+    <!-- ══ HERO BANNER — FULL VIEWPORT ══ -->
+    <div class="banner" id="heroBanner">
+        <img src="../../../img/local.png" alt="Yaku Sabor — Restaurante Marino Nikkei en Lima">
+        <!-- Overlay via CSS::after -->
+        <div class="hero-overlay-content">
+            <span class="hero-eyebrow">Miraflores · Lima · Perú</span>
+            <span class="hero-ornament"></span>
+            <h1>El Sabor <em>Auténtico</em><br>del Mar</h1>
+            <p>Pescados seleccionados del día, ceviches tradicionales y fusión Nikkei preparada por maestros de la cocina marina peruana.</p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                <a href="menu.html" class="btn btn-primary">Ver la Carta</a>
+                <a href="reservas.html" class="btn btn-outline-white">Reservar Mesa</a>
             </div>
-            <div class="col-md-4">
-                <div class="info-box-marine text-center h-100" style="background: linear-gradient(135deg, var(--sunset-coral), var(--sunset-orange));">
-                    <h5 class="fw-bold text-white mb-2">🌅 Terraza Frente al Mar</h5>
-                    <p class="small text-white-50 mb-0">Disfruta de la mejor vista costera, cócteles marinos y ambiente acogedor familiar.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="info-box-marine text-center h-100">
-                    <h5 class="fw-bold text-white mb-2">🇵🇪 Recetas Tradicionales</h5>
-                    <p class="small text-white-50 mb-0">Ceviches clasicos, tiraditos, causa acevichada y chaufa de mariscos preparados por chefs expertos.</p>
-                </div>
-            </div>
+        </div>
+        <div class="hero-scroll-hint">
+            <i class="fa-solid fa-chevron-down"></i>
+            <span>Descubre</span>
         </div>
     </div>
 
-    <div class="footer-line my-5"></div>
-
-    <!--Promociones-->
-    <section class="py-4">
-        <div class="container text-center">
-            <span class="beach-badge beach-badge-coral">🔥 Ofertas del Día</span>
-            <h2 class="titulo-carta text-dark mb-2" style="font-size: 2.6rem;">Promociones Especiales</h2>
-            <p class="section-subtitle text-muted mb-5">Descubre nuestras ofertas exclusivas y disfruta de los mejores combos marinos.</p>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <img src="../../../img/promo1.png" class="card-img-top" alt="Promoción 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Combo Familiar</h5>
-                            <p class="card-text">Disfruta de un combo para 4 personas con nuestros platos más populares
-                                a
-                                un precio especial.</p>
-                        </div>
-                    </div>
+    <!-- ══ SECCIÓN: BIENVENIDA ══ -->
+    <section class="section-pad bg-white-clean">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5">
+                    <span class="section-eyebrow">Nuestra filosofía</span>
+                    <h2 class="section-title">Tradición marina,<br><em>alma Nikkei</em></h2>
+                    <span class="section-divider left"></span>
+                    <p class="section-lead mt-0">
+                        En Yaku Sabor nos apasiona ofrecerte una experiencia culinaria insuperable, combinando la riqueza de la pesca artesanal peruana con la elegancia y precisión de la cocina contemporánea Nikkei.
+                    </p>
+                    <p class="section-lead mt-3">
+                        Cada plato es una celebración de sabores, elaborado con ingredientes seleccionados cada mañana en el puerto.
+                    </p>
+                    <a href="menu.html" class="btn btn-yk-outline mt-4">Explorar la Carta</a>
                 </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <img src="../../../img/Promo2.png" class="card-img-top" alt="Promoción 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Descuento en Ceviche</h5>
-                            <p class="card-text">Obtén un 20% de descuento en todos nuestros ceviches durante los fines
-                                de
-                                semana.</p>
+                <div class="col-lg-7">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <img src="../../../img/ceviche.png" alt="Ceviche Yaku Sabor"
+                                style="width:100%; height:320px; object-fit:cover; border-radius:0;">
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <img src="../../../img/Promo3.png" class="card-img-top" alt="Promoción 3">
-                        <div class="card-body">
-                            <h5 class="card-title">Happy Hour</h5>
-                            <p class="card-text">Disfruta de 2x1 en bebidas seleccionadas de 5 PM a 7 PM todos los días.
-                            </p>
+                        <div class="col-6 d-flex flex-column gap-3">
+                            <img src="../../../img/Causa.jpg" alt="Causa Acevichada"
+                                style="width:100%; height:152px; object-fit:cover; border-radius:0;">
+                            <img src="../../../img/barra.jpg" alt="Terraza Yaku Sabor"
+                                style="width:100%; height:152px; object-fit:cover; border-radius:0;">
                         </div>
                     </div>
                 </div>
@@ -207,43 +190,203 @@
         </div>
     </section>
 
-    <div class="border-bottom my-3"></div>
-
-    <!--Cards-->
-    <h2 class="text-center mb-4">Nuestros Platos Bandera</h2>
-    <div class="contenedor">
-        <div class="card" style="width: 18rem;">
-            <img src="../../../img/Causa.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <p class="card-text">Delicada causa de papa amarilla sazonada con cítricos, rellena con una suave
-                    emulsión y finos ingredientes seleccionados, logrando un equilibrio fresco y sofisticado en cada
-                    bocado.</p>
-            </div>
-        </div>
-        <div class="card" style="width: 18rem;">
-            <img src="../../../img/Chupe.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <p class="card-text">Cremosa y reconfortante elaboración de inspiración casera, enriquecida con mariscos
-                    selectos y un sutil toque de especias que realzan su carácter profundo.</p>
-            </div>
-        </div>
-        <div class="card" style="width: 18rem;">
-            <img src="../../../img/Pescado frito.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <p class="card-text">Filete de pescado fresco, cuidadosamente dorado hasta lograr una textura crujiente
-                    perfecta, acompañado de guarniciones clásicas que resaltan su sabor natural.</p>
-            </div>
-        </div>
-    </div>
-
-    <footer class="bg-dark text-light py-4 mt-5">
+    <!-- ══ SECCIÓN: PROPUESTA DE VALOR (3 pilares) ══ -->
+    <section class="section-pad bg-cream-2">
         <div class="container text-center">
-            <p class="mb-1 fw-semibold">Yaku Sabor</p>
-            <p class="mb-1">Lima, Perú · +51 987 654 321 · contacto@yakusabor.com</p>
-            <small class="text-secondary">© 2026 Yaku Sabor. Todos los derechos reservados.</small>
+            <span class="section-eyebrow">Por qué elegirnos</span>
+            <h2 class="section-title mb-2">Una experiencia <em>completa</em></h2>
+            <span class="section-divider"></span>
+
+            <div class="row g-4 mt-2">
+                <div class="col-md-4">
+                    <div class="info-box-marine text-start h-100">
+                        <div class="mb-3" style="color: var(--yk-gold); font-size: 1.4rem;">
+                            <i class="fa-solid fa-fish-fins"></i>
+                        </div>
+                        <h5>Pescados & Mariscos Frescos</h5>
+                        <p>Ingredientes seleccionados cada mañana en el puerto para garantizar textura y sabor inigualables.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-box-marine text-start h-100">
+                        <div class="mb-3" style="color: var(--yk-gold); font-size: 1.4rem;">
+                            <i class="fa-solid fa-sun"></i>
+                        </div>
+                        <h5>Terraza Frente al Mar</h5>
+                        <p>Disfruta de la mejor vista costera, con la brisa marina y un ambiente sofisticado y acogedor.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-box-marine text-start h-100">
+                        <div class="mb-3" style="color: var(--yk-gold); font-size: 1.4rem;">
+                            <i class="fa-solid fa-bowl-rice"></i>
+                        </div>
+                        <h5>Fusión Peruano-Nikkei</h5>
+                        <p>Ceviches clásicos, tiraditos al olivo, causas crocantes y chaufas de mariscos preparados con maestría.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ SECCIÓN: PLATOS BANDERA ══ -->
+    <section class="section-pad bg-white-clean">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="section-eyebrow">Especialidades del Chef</span>
+                <h2 class="section-title">Nuestros Platos <em>Bandera</em></h2>
+                <span class="section-divider"></span>
+            </div>
+
+            <div class="contenedor">
+                <div class="card" style="width: 21rem;">
+                    <img src="../../../img/Causa.jpg" class="card-img-top" alt="Causa Acevichada">
+                    <div class="card-body text-start">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h5 class="card-title">Causa Acevichada</h5>
+                            <span style="font-size:0.7rem; letter-spacing:0.12em; color:var(--yk-gold-dk); text-transform:uppercase; font-weight:600; margin-top:4px;">Chef's Pick</span>
+                        </div>
+                        <p class="card-text">Delicada causa de papa amarilla sazonada con ají amarillo y limón, coronada con finas láminas de pescado en leche de tigre.</p>
+                    </div>
+                </div>
+
+                <div class="card" style="width: 21rem;">
+                    <img src="../../../img/Chupe.jpg" class="card-img-top" alt="Chupe de Mariscos">
+                    <div class="card-body text-start">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h5 class="card-title">Chupe de Mariscos</h5>
+                            <span style="font-size:0.7rem; letter-spacing:0.12em; color:var(--yk-gold-dk); text-transform:uppercase; font-weight:600; margin-top:4px;">Clásico</span>
+                        </div>
+                        <p class="card-text">Cremosa preparación tradicional enriquecida con langostinos, calamar, pulpo, queso fresco y huevo pochado.</p>
+                    </div>
+                </div>
+
+                <div class="card" style="width: 21rem;">
+                    <img src="../../../img/Pescado frito.jpg" class="card-img-top" alt="Pescado Crocante">
+                    <div class="card-body text-start">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h5 class="card-title">Pescado Crocante</h5>
+                            <span style="font-size:0.7rem; letter-spacing:0.12em; color:var(--yk-gold-dk); text-transform:uppercase; font-weight:600; margin-top:4px;">Marino</span>
+                        </div>
+                        <p class="card-text">Pesca del día marinada en especias costeñas, dorada a la perfección, con yucas doradas y salsa criolla fresca.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5">
+                <a href="menu.html" class="btn btn-yk-outline">Ver toda la carta</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ SECCIÓN: BANNER RESERVA (fondo imagen) ══ -->
+    <section style="position:relative; height: 480px; overflow:hidden;">
+        <img src="../../../img/ceviche-desktop.jpg" alt="Reserva tu mesa" 
+            style="width:100%; height:100%; object-fit:cover; filter: brightness(0.45);">
+        <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding: 2rem;">
+            <span style="display:block; width:40px; height:1px; background:var(--yk-gold); margin:0 auto 1.5rem;"></span>
+            <span style="font-family:var(--font-ui); font-size:0.72rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--yk-gold); display:block; margin-bottom:1rem;">Reservas</span>
+            <h2 style="font-family:var(--font-serif); font-weight:300; font-size:clamp(2rem,4vw,3.5rem); color:#fff; margin-bottom:1.2rem; line-height:1.1;">
+                Disfruta de las <em style="font-style:italic; color:var(--yk-gold);">vistas al mar</em><br>en Miraflores
+            </h2>
+            <p style="color:rgba(255,255,255,0.7); font-size:1rem; font-weight:300; max-width:500px; margin:0 auto 2.5rem; line-height:1.7;">
+                Reserva tu mesa y asegura la mejor experiencia gastronómica marina de Lima.
+            </p>
+            <a href="reservas.html" class="btn btn-outline-white">Reservar una Mesa</a>
+        </div>
+    </section>
+
+    <!-- ══ SECCIÓN: PROMOCIONES ══ -->
+    <section class="section-pad bg-cream-2">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="section-eyebrow">Ofertas de la semana</span>
+                <h2 class="section-title">Promociones <em>Exclusivas</em></h2>
+                <span class="section-divider"></span>
+                <p class="section-lead mx-auto mt-3">Descubre nuestros combos marinos diseñados para compartir los mejores momentos.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="position-relative">
+                            <img src="../../../img/promo1.png" class="card-img-top" alt="Combo Familiar">
+                            <span class="position-absolute top-0 start-0 m-3" style="background:var(--yk-dark); color:#fff; font-family:var(--font-ui); font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.35rem 0.9rem;">
+                                Combo 4 Personas
+                            </span>
+                        </div>
+                        <div class="card-body text-start">
+                            <h5 class="card-title">Combo Familiar Marino</h5>
+                            <p class="card-text">Ceviche Mixto familiar, Arroz con Mariscos gigantes, Chicharrón de Calamar y Jarra de Chicha Morada.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="position-relative">
+                            <img src="../../../img/Promo2.png" class="card-img-top" alt="Festival de Ceviches">
+                            <span class="position-absolute top-0 start-0 m-3" style="background:var(--yk-gold); color:#fff; font-family:var(--font-ui); font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.35rem 0.9rem;">
+                                20% OFF
+                            </span>
+                        </div>
+                        <div class="card-body text-start">
+                            <h5 class="card-title">Festival de Ceviches</h5>
+                            <p class="card-text">20% de descuento en toda nuestra variedad de ceviches y tiraditos durante los fines de semana.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="position-relative">
+                            <img src="../../../img/Promo3.png" class="card-img-top" alt="Happy Hour">
+                            <span class="position-absolute top-0 start-0 m-3" style="background:var(--yk-charcoal); color:var(--yk-gold); font-family:var(--font-ui); font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.35rem 0.9rem;">
+                                2×1 Happy Hour
+                            </span>
+                        </div>
+                        <div class="card-body text-start">
+                            <h5 class="card-title">Coctelería Marina</h5>
+                            <p class="card-text">2×1 en Pisco Sour, Chilcanos y cócteles de autor de 5 PM a 7 PM. Maridaje perfecto con la puesta de sol.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ FOOTER ══ -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row g-5 mb-5">
+                <div class="col-md-4">
+                    <img src="../../../img/ICON1.png" alt="Yaku Sabor" style="height:44px; filter:brightness(0) invert(1); margin-bottom:1.2rem;">
+                    <p class="small">La mejor experiencia en pescados y mariscos en Lima. Sabor, frescura y tradición marina peruana con alma Nikkei.</p>
+                </div>
+                <div class="col-md-4">
+                    <h6>Visítanos</h6>
+                    <p class="small mb-2"><i class="fa-solid fa-location-dot me-2" style="color:var(--yk-gold);"></i>Av. Costanera 450, Miraflores, Lima</p>
+                    <p class="small mb-2"><i class="fa-solid fa-phone me-2" style="color:var(--yk-gold);"></i>+51 987 654 321</p>
+                    <p class="small mb-0"><i class="fa-solid fa-clock me-2" style="color:var(--yk-gold);"></i>Lunes a Domingo: 11:30 AM – 10:30 PM</p>
+                </div>
+                <div class="col-md-4">
+                    <h6>Síguenos</h6>
+                    <div class="d-flex gap-2 mt-2">
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="social-link" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#" class="social-link" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                    <div class="mt-4">
+                        <a href="reservas.html" class="btn-footer-reserve">Reservar Mesa</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-top pt-4 text-center" style="border-color:rgba(255,255,255,0.08) !important;">
+                <small>© 2026 Yaku Sabor. Todos los derechos reservados.</small>
+            </div>
         </div>
     </footer>
 
+    <!-- Bootstrap & Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>

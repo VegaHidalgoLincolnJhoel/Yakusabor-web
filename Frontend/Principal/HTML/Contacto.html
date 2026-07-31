@@ -1,22 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yaku Sabor - Contacto y Ubicación</title>
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="../CSS/style.css">
-    <title>Yaku Sabor - restaurant </title>
+    <!-- FontAwesome & Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="../CSS/style.css?v=5">
 </head>
 
 <body>
-    <div class="Fondo-Contacto">
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg" id="mainNavbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html">
-                <img src="../../../img/ICON1.png" alt="logo" id="navLogo" data-logo-default="../../../img/ICON1.png"
+                <img src="../../../img/ICON1.png" alt="Yaku Sabor" id="navLogo" data-logo-default="../../../img/ICON1.png"
                     data-logo-scroll="../../../img/icon2.png" />
             </a>
 
@@ -28,16 +32,24 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="index.html">INICIO</a>
+                        <a class="nav-link" href="index.html">
+                            <i class="fa-solid fa-compass me-1"></i> INICIO
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="menu.html">MENÚ</a>
+                        <a class="nav-link" href="menu.html">
+                            <i class="fa-solid fa-utensils me-1"></i> MENÚ
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="reservas.html">RESERVAS</a>
+                        <a class="nav-link" href="reservas.html">
+                            <i class="fa-solid fa-calendar-check me-1"></i> RESERVAS
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="Contacto.html">CONTACTO</a>
+                        <a class="nav-link active" href="Contacto.html">
+                            <i class="fa-solid fa-paper-plane me-1"></i> CONTACTO
+                        </a>
                     </li>
                 </ul>
                 <div class="navbar-actions">
@@ -52,142 +64,151 @@
         </div>
     </nav>
 
-    <!-- ========================================== -->
-    <!-- MODAL DE INICIO DE SESIÓN -->
-    <!-- ========================================== -->
+    <!-- Modal Login -->
     <div class="modal fade" id="registroModal" tabindex="-1" aria-labelledby="registroModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="registroModalLabel">Iniciar Sesión</h5>
+                    <h5 class="modal-title" id="registroModalLabel">
+                        <i class="fa-solid fa-user-circle me-2 text-warning"></i>Iniciar Sesión
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form id="loginForm">
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" required>
+                            <label for="exampleInputEmail1" class="form-label fw-bold">Correo electrónico</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="tuemail@ejemplo.com" required>
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" required>
+                            <label for="exampleInputPassword1" class="form-label fw-bold">Contraseña</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="••••••••" required>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+                        <button type="submit" class="btn btn-primary w-100 py-2">
+                            <i class="fa-solid fa-right-to-bracket me-2"></i>Ingresar
+                        </button>
                     </form>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
                     <a href="#" class="text-decoration-none text-muted small">¿Olvidaste tu contraseña?</a>
-                    <!-- AQUÍ CAMBIAMOS EL ENLACE PARA QUE ABRA EL MODAL DE REGISTRO -->
-                    <a href="#" id="linkToRegister" class="text-decoration-none small">
-                        ¿No tienes cuenta? <strong>Regístrate</strong>
+                    <a href="#" id="linkToRegister" class="text-decoration-none small text-primary fw-bold">
+                        ¿No tienes cuenta? Regístrate
                     </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- NUEVO MODAL DE REGISTRO DE USUARIO -->
-    <!-- ========================================== -->
-    <div class="modal fade" id="crearCuentaModal" tabindex="-1" aria-labelledby="crearCuentaModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
+    <!-- Modal Registro -->
+    <div class="modal fade" id="crearCuentaModal" tabindex="-1" aria-labelledby="crearCuentaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="crearCuentaModalLabel">Crear Cuenta</h5>
+                    <h5 class="modal-title" id="crearCuentaModalLabel">
+                        <i class="fa-solid fa-user-plus me-2 text-warning"></i>Crear Cuenta
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form id="registerForm">
                         <div class="mb-3">
-                            <label for="regNombre" class="form-label">Nombre completo</label>
+                            <label for="regNombre" class="form-label fw-bold">Nombre completo</label>
                             <input type="text" class="form-control" id="regNombre" required>
                         </div>
                         <div class="mb-3">
-                            <label for="regEmail" class="form-label">Correo electrónico</label>
+                            <label for="regEmail" class="form-label fw-bold">Correo electrónico</label>
                             <input type="email" class="form-control" id="regEmail" required>
                         </div>
                         <div class="mb-3">
-                            <label for="regPassword" class="form-label">Contraseña</label>
+                            <label for="regPassword" class="form-label fw-bold">Contraseña</label>
                             <input type="password" class="form-control" id="regPassword" required>
                         </div>
                         <div class="mb-3">
-                            <label for="regConfirmPassword" class="form-label">Confirmar Contraseña</label>
+                            <label for="regConfirmPassword" class="form-label fw-bold">Confirmar Contraseña</label>
                             <input type="password" class="form-control" id="regConfirmPassword" required>
                         </div>
-                        <button type="submit" class="btn btn-success w-100">Registrarse</button>
-                    </form>
+                        <button type="submit" class="btn btn-primary w-100 py-2">
+                            <i class="fa-solid fa-check-circle me-2"></i>Registrarse
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
-                    <!-- ENLACE PARA VOLVER AL LOGIN -->
-                    <a href="#" id="linkToLogin" class="text-decoration-none small">
-                        ¿Ya tienes cuenta? <strong>Inicia sesión</strong>
+                    <a href="#" id="linkToLogin" class="text-decoration-none small text-primary fw-bold">
+                        ¿Ya tienes cuenta? Inicia sesión
                     </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <main class="container my-5 pt-5">
-        <div class="text-center mb-5">
-            <span class="beach-badge">📍 Encuéntranos frente al mar</span>
-            <h1 class="titulo-carta text-dark mb-2" style="font-size: 2.6rem;">Conócenos y Escríbenos</h1>
-            <p class="section-subtitle text-muted">Estamos listos para atenderte con la mejor sazón marina. ¡Envíanos tu consulta o visítanos!</p>
-        </div>
-        <div class="row g-5 align-items-center">
-            <div class="col-md-6">
-                <div class="contact-card">
-                    <h4 class="fw-bold mb-4" style="color: var(--sea-deep);">Envíanos un mensaje</h4>
-                    <form id="contactForm">
-                        <div class="mb-3">
-                            <label for="nombreContacto" class="form-label fw-semibold">Nombre Completo</label>
-                            <input type="text" class="form-control" id="nombreContacto" placeholder="Ej. Carlos Rodríguez" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="emailContacto" class="form-label fw-semibold">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="emailContacto" placeholder="tu@correo.com" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="mensajeContacto" class="form-label fw-semibold">Mensaje</label>
-                            <textarea class="form-control" id="mensajeContacto" rows="4" placeholder="¿Deseas consultar sobre eventos, reservas especiales o el menú?" required></textarea>
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="terminosContacto" required>
-                            <label class="form-check-label small" for="terminosContacto">Acepto términos y política de privacidad</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 py-3">Enviar Mensaje Marino</button>
-                    </form>
-                </div>
+    <!-- Contacto Main -->
+    <main class="Fondo-Contacto">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="section-eyebrow">Encúentranos frente al mar</span>
+                <h1 class="section-title">Conócenos y <em>Escríbenos</em></h1>
+                <span class="section-divider"></span>
+                <p class="section-lead mx-auto">Estamos encantados de atenderte con la mejor sazón marina. Envíanos tu consulta o visítanos.</p>
             </div>
-            <div class="col-md-6 text-center">
-                <div class="info-box-marine text-start mb-4">
-                    <h5 class="fw-bold text-white mb-2">🏖️ Yaku Sabor Restaurante Marino</h5>
-                    <p class="mb-1 text-white-50"><strong class="text-white">Dirección:</strong> Av. Costanera 450, Miraflores, Lima - Perú</p>
-                    <p class="mb-1 text-white-50"><strong class="text-white">Horario:</strong> Lunes a Domingo: 11:00 AM - 10:00 PM</p>
-                    <p class="mb-0 text-white-50"><strong class="text-white">Teléfono / WhatsApp:</strong> +51 987 654 321</p>
+
+            <div class="row g-5 align-items-start">
+                <div class="col-md-6">
+                    <div class="contact-card">
+                        <h4 class="mb-4" style="font-family:var(--font-serif); font-weight:400; font-size:1.5rem;">Enviar un mensaje</h4>
+                        <form id="contactForm">
+                            <div class="mb-4">
+                                <label for="nombreContacto" class="form-label">Nombre Completo</label>
+                                <input type="text" class="form-control" id="nombreContacto" placeholder="Ej. Carlos Rodríguez" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="emailContacto" class="form-label">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="emailContacto" placeholder="tu@correo.com" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="mensajeContacto" class="form-label">Mensaje</label>
+                                <textarea class="form-control" id="mensajeContacto" rows="5" placeholder="¿Deseas consultar sobre reservas, eventos especiales o platos del menú?" required></textarea>
+                            </div>
+                            <div class="mb-4 form-check">
+                                <input type="checkbox" class="form-check-input" id="terminosContacto" required>
+                                <label class="form-check-label small" for="terminosContacto" style="color:var(--yk-gray);">Acepto la política de privacidad y términos de uso.</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                Enviar Mensaje
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                <div class="contact-card p-2">
-                    <iframe src="https://maps.google.com/maps?q=Lima,Peru&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%"
-                        height="320" style="border:0; border-radius: 18px;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
+
+                <div class="col-md-6">
+                    <div class="info-box-marine mb-4" style="background:var(--yk-dark) !important; border-left-color:var(--yk-gold) !important;">
+                        <h5 style="color:var(--yk-gold) !important; font-family:var(--font-serif); font-weight:600;">Yaku Sabor Restaurante Marino</h5>
+                        <p style="color:rgba(254,250,243,0.7) !important;" class="mb-2"><i class="fa-solid fa-map-location-dot me-2" style="color:var(--yk-gold);"></i><strong style="color:#fff;">Dirección:</strong> Av. Costanera 450, Miraflores, Lima - Perú</p>
+                        <p style="color:rgba(254,250,243,0.7) !important;" class="mb-2"><i class="fa-solid fa-clock me-2" style="color:var(--yk-gold);"></i><strong style="color:#fff;">Horario:</strong> Lun - Dom: 11:00 AM – 10:30 PM</p>
+                        <p style="color:rgba(254,250,243,0.7) !important;" class="mb-0"><i class="fa-solid fa-phone me-2" style="color:var(--yk-gold);"></i><strong style="color:#fff;">Teléfono / WhatsApp:</strong> +51 987 654 321</p>
+                    </div>
+                    <div class="contact-card p-0" style="overflow:hidden;">
+                        <iframe src="https://maps.google.com/maps?q=Lima,Peru&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                            width="100%" height="320" style="border:0; display:block;"
+                            allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="bg-dark text-light py-4 mt-auto">
+    <!-- Footer -->
+    <footer class="py-5">
         <div class="container text-center">
-            <p class="mb-1 fw-semibold">Yaku Sabor</p>
-            <p class="mb-1">Lima, Perú · +51 987 654 321 · contacto@yakusabor.com</p>
-            <small class="text-secondary">© 2026 Yaku Sabor. Todos los derechos reservados.</small>
+            <img src="../../../img/ICON1.png" alt="Yaku Sabor" style="height:36px; filter:brightness(0) invert(1); margin-bottom:1rem; opacity:0.7;">
+            <p class="small">Lima, Perú · +51 987 654 321 · contacto@yakusabor.com</p>
+            <small>&copy; 2026 Yaku Sabor. Todos los derechos reservados.</small>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
-    </div>
+
     <script src="../../Shared/JS/api-config.js"></script>
     <script src="../../Principal/JS/nav.js"></script>
     <script src="../../Principal/JS/login.js"></script>

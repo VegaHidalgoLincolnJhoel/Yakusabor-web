@@ -1,20 +1,35 @@
-// Navbar: cambia estilos y logos al hacer scroll con verificaciones seguras
-const navbar = document.getElementById('mainNavbar');
-const navLogo = document.getElementById('navLogo');
-const registerImage = document.querySelector('.nav-register-image');
+/**
+ * nav.js — Yaku Sabor
+ * Navbar: transparente sobre el hero → blanco sólido al hacer scroll.
+ * En páginas sin hero, arranca en estado sólido directamente.
+ */
 
-function updateNavbarOnScroll() {
-    const isScrolled = window.scrollY > 10;
-    if (navbar) {
-        navbar.classList.toggle('navbar-scrolled', isScrolled);
+const navbar       = document.getElementById('mainNavbar');
+const navLogo      = document.getElementById('navLogo');
+const registerImg  = document.querySelector('.nav-register-image');
+
+// Detecta si la página tiene hero banner
+const hasHero = document.querySelector('.banner') !== null;
+
+function updateNavbar() {
+    if (!navbar) return;
+
+    // Sin hero → siempre visible (estado scrolled desde el inicio)
+    const scrolled = !hasHero || window.scrollY > 60;
+
+    navbar.classList.toggle('scrolled', scrolled);
+
+    // Logo: versión oscura cuando navbar es blanca
+    if (navLogo && navLogo.dataset.logoScroll && navLogo.dataset.logoDefault) {
+        navLogo.src = scrolled ? navLogo.dataset.logoScroll : navLogo.dataset.logoDefault;
     }
-    if (navLogo && navLogo.dataset && navLogo.dataset.logoScroll && navLogo.dataset.logoDefault) {
-        navLogo.src = isScrolled ? navLogo.dataset.logoScroll : navLogo.dataset.logoDefault;
-    }
-    if (registerImage && registerImage.dataset && registerImage.dataset.registerScroll && registerImage.dataset.registerDefault) {
-        registerImage.src = isScrolled ? registerImage.dataset.registerScroll : registerImage.dataset.registerDefault;
+
+    // Imagen de registro
+    if (registerImg && registerImg.dataset.registerScroll && registerImg.dataset.registerDefault) {
+        registerImg.src = scrolled ? registerImg.dataset.registerScroll : registerImg.dataset.registerDefault;
     }
 }
 
-window.addEventListener('scroll', updateNavbarOnScroll);
-updateNavbarOnScroll();
+window.addEventListener('scroll', updateNavbar, { passive: true });
+updateNavbar(); // Ejecutar inmediatamente al cargar
+

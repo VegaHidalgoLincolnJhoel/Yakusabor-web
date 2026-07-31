@@ -1,193 +1,232 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yaku Sabor - Reservas de Mesa Frente al Mar</title>
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="../CSS/style.css">
-    <title>Yaku Sabor - restaurant </title>
+    <!-- FontAwesome & Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="../CSS/style.css?v=5">
 </head>
 
 <body>
     <!-- Navbar -->
-    <div class="Fondo-Reservas">
-        <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="index.html">
-                    <img src="../../../img/ICON1.png" alt="logo" id="navLogo" data-logo-default="../../../img/ICON1.png"
-                        data-logo-scroll="../../../img/icon2.png" />
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="index.html">INICIO</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="menu.html">MENÚ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="reservas.html">RESERVAS</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="Contacto.html">CONTACTO</a>
-                        </li>
-                    </ul>
-                    <div class="navbar-actions">
-                        <button type="button" class="nav-link nav-register-btn" aria-label="Registro"
-                            data-bs-toggle="modal" data-bs-target="#registroModal">
-                            <img src="../../../img/register1.png" alt="Registrar"
-                                class="nav-register-image nav-register-default"
-                                data-register-default="../../../img/register1.png"
-                                data-register-scroll="../../../img/register2.png" />
-                            <span>Inicia Sesión</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <!--Formulario de Inicio de Sesión-->
-        <div class="modal fade" id="registroModal" tabindex="-1" aria-labelledby="registroModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="registroModalLabel">Iniciar Sesión</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="loginForm">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Correo electrónico</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
-                        </form>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-between">
-                        <a href="#" class="text-decoration-none text-muted small">¿Olvidaste tu contraseña?</a>
-                        <a href="#" id="linkToRegister" class="text-decoration-none small">
-                            ¿No tienes cuenta? <strong>Regístrate</strong>
+    <nav class="navbar navbar-expand-lg" id="mainNavbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="../../../img/ICON1.png" alt="Yaku Sabor" id="navLogo" data-logo-default="../../../img/ICON1.png"
+                    data-logo-scroll="../../../img/icon2.png" />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fa-solid fa-compass me-1"></i> INICIO
                         </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="crearCuentaModal" tabindex="-1" aria-labelledby="crearCuentaModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="crearCuentaModalLabel">Crear Cuenta</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="registerForm">
-                            <div class="mb-3">
-                                <label for="regNombre" class="form-label">Nombre completo</label>
-                                <input type="text" class="form-control" id="regNombre" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="regEmail" class="form-label">Correo electrónico</label>
-                                <input type="email" class="form-control" id="regEmail" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="regPassword" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="regPassword" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="regConfirmPassword" class="form-label">Confirmar Contraseña</label>
-                                <input type="password" class="form-control" id="regConfirmPassword" required>
-                            </div>
-                            <button type="submit" class="btn btn-success w-100">Registrarse</button>
-                        </form>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <a href="#" id="linkToLogin" class="text-decoration-none small">
-                            ¿Ya tienes cuenta? <strong>Inicia sesión</strong>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="menu.html">
+                            <i class="fa-solid fa-utensils me-1"></i> MENÚ
                         </a>
-                    </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="reservas.html">
+                            <i class="fa-solid fa-calendar-check me-1"></i> RESERVAS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Contacto.html">
+                            <i class="fa-solid fa-paper-plane me-1"></i> CONTACTO
+                        </a>
+                    </li>
+                </ul>
+                <div class="navbar-actions">
+                    <button type="button" class="nav-link nav-register-btn" aria-label="Registro"
+                        data-bs-toggle="modal" data-bs-target="#registroModal">
+                        <img src="../../../img/register1.png" alt="Registrar"
+                            class="nav-register-image nav-register-default"
+                            data-register-default="../../../img/register1.png"
+                            data-register-scroll="../../../img/register2.png" />
+                        <span>Inicia Sesión</span>
+                    </button>
                 </div>
             </div>
         </div>
+    </nav>
 
-        <!--Zona de reservas-->
-        <div class="container text-center pt-4 pb-5">
-            <span class="beach-badge beach-badge-coral">🌅 Experiencia Gastronómica Marina</span>
-            <h1 class="titulo-carta mb-3">Reserva Tu Mesa En La Playa</h1>
-            <p class="lead max-w-700 mx-auto mb-4" style="color: var(--sand-warm);">
-                ¡Asegura tu lugar frente al mar en Yaku Sabor! Disfruta de nuestros cebiches frescos, causa marina y el mejor ambiente costero.
-            </p>
-            <div class="row justify-content-center my-4">
-                <div class="col-md-8">
-                    <div class="card overflow-hidden shadow-lg border-0 rounded-4">
-                        <img src="../../../img/local.png" alt="Ambiente de Yaku Sabor" class="img-fluid" style="height: 320px; object-fit: cover;">
-                        <div class="card-body bg-white p-4">
-                            <h4 class="fw-bold mb-2" style="color: var(--sea-deep);">Mesas con vista y terraza marina</h4>
-                            <p class="text-muted mb-3">Ambiente climatizado, terraza al aire libre y atención personalizada.</p>
-                            <button type="button" class="btn btn-primary btn-lg px-5 py-3 shadow" data-bs-toggle="modal" data-bs-target="#reservaMesasModal">
-                                🪑 Seleccionar Mesa y Reservar
-                            </button>
-                        </div>
-                    </div>
+    <!-- Modal Login -->
+    <div class="modal fade" id="registroModal" tabindex="-1" aria-labelledby="registroModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registroModalLabel">
+                        <i class="fa-solid fa-user-circle me-2 text-warning"></i>Iniciar Sesión
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="reservaMesasModal" tabindex="-1" aria-labelledby="reservaMesasModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content menu-modal">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="reservaMesasModalLabel">Selecciona tu mesa</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="reservaFeedback" class="alert alert-info py-2 d-none mb-3" role="alert"></div>
-                        <div class="d-flex justify-content-center gap-3 flex-wrap mb-3">
-                            <span class="badge rounded-pill text-bg-success">Libre</span>
-                            <span class="badge rounded-pill text-bg-danger">Ocupada</span>
-                            <span class="badge rounded-pill text-bg-warning text-dark">Seleccionada</span>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label fw-bold">Correo electrónico</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="tuemail@ejemplo.com" required>
                         </div>
-                        <!-- agregar conexion con backend aqui: mostrar disponibilidad real de mesas desde la API -->
-                        <div id="mesasGrid" class="mesas-grid" aria-live="polite"></div>
-                        <p id="mesaSeleccionadaTexto" class="text-center mt-3 mb-0 fw-semibold text-body-secondary">
-                            Ninguna mesa seleccionada.
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <!-- agregar conexion con backend aqui: confirmar reserva con datos del cliente -->
-                        <button type="button" class="btn btn-primary" id="confirmarReservaBtn" disabled>
-                            Confirmar reserva
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label fw-bold">Contraseña</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2">
+                            <i class="fa-solid fa-right-to-bracket me-2"></i>Ingresar
                         </button>
-                    </div>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <a href="#" class="text-decoration-none text-muted small">¿Olvidaste tu contraseña?</a>
+                    <a href="#" id="linkToRegister" class="text-decoration-none small text-primary fw-bold">
+                        ¿No tienes cuenta? Regístrate
+                    </a>
                 </div>
             </div>
         </div>
-
-        <footer class="bg-dark text-light py-4 mt-auto">
-            <div class="container text-center">
-                <p class="mb-1 fw-semibold">Yaku Sabor</p>
-                <p class="mb-1">Lima, Perú · +51 987 654 321 · contacto@yakusabor.com</p>
-                <small class="text-secondary">© 2026 Yaku Sabor. Todos los derechos reservados.</small>
-            </div>
-        </footer>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-            crossorigin="anonymous"></script>
     </div>
+
+    <!-- Modal Registro -->
+    <div class="modal fade" id="crearCuentaModal" tabindex="-1" aria-labelledby="crearCuentaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="crearCuentaModalLabel">
+                        <i class="fa-solid fa-user-plus me-2 text-warning"></i>Crear Cuenta
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="regNombre" class="form-label fw-bold">Nombre completo</label>
+                            <input type="text" class="form-control" id="regNombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regEmail" class="form-label fw-bold">Correo electrónico</label>
+                            <input type="email" class="form-control" id="regEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regPassword" class="form-label fw-bold">Contraseña</label>
+                            <input type="password" class="form-control" id="regPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regConfirmPassword" class="form-label fw-bold">Confirmar Contraseña</label>
+                            <input type="password" class="form-control" id="regConfirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2">
+                            <i class="fa-solid fa-check-circle me-2"></i>Registrarse
+                        </button>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <a href="#" id="linkToLogin" class="text-decoration-none small text-primary fw-bold">
+                        ¿Ya tienes cuenta? Inicia sesión
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Zona de Reservas -->
+    <main class="Fondo-Reservas">
+        <div class="container text-center">
+            <span class="section-eyebrow">Reserva tu espacio</span>
+            <h1 class="section-title">Reserva tu <em>Mesa</em></h1>
+            <span class="section-divider"></span>
+            <p class="section-lead mx-auto">
+                Asegura tu mesa frente al mar en Yaku Sabor. Disfruta de ceviches recién preparados, la brisa marina y la mejor atención personal.
+            </p>
+        
+        <div class="row justify-content-center my-4">
+            <div class="col-md-8">
+                <div class="card overflow-hidden">
+                    <div class="position-relative">
+                        <img src="../../../img/local.png" alt="Ambiente de Yaku Sabor" class="img-fluid w-100" style="height: 340px; object-fit: cover;">
+                        <div class="position-absolute bottom-0 start-0 w-100 p-3" style="background:linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);">
+                            <span style="font-family:var(--font-ui); font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--yk-gold);">Vista al Mar &amp; Terraza</span>
+                        </div>
+                    </div>
+                    <div class="card-body bg-white p-4">
+                        <h4 class="fw-bold mb-2 text-dark">
+                            <i class="fa-solid fa-chair me-2 text-primary"></i>Mesas con vista panorámica y terraza marina
+                        </h4>
+                        <p class="text-muted mb-4">Selecciona tu mesa disponible en tiempo real y reserva de forma inmediata.</p>
+                        <button type="button" class="btn btn-primary btn-lg px-5 py-3 shadow" data-bs-toggle="modal" data-bs-target="#reservaMesasModal">
+                            <i class="fa-solid fa-calendar-plus me-2"></i>Seleccionar Mesa y Reservar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    <!-- Modal Selección de Mesas -->
+    <div class="modal fade" id="reservaMesasModal" tabindex="-1" aria-labelledby="reservaMesasModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reservaMesasModalLabel">
+                        <i class="fa-solid fa-grid-2 me-2 text-warning"></i>Selecciona tu mesa disponible
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="reservaFeedback" class="alert alert-info py-2 d-none mb-3" role="alert"></div>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap mb-4">
+                        <span class="badge rounded-pill bg-success px-3 py-2 fs-6">
+                            <i class="fa-solid fa-circle-check me-1"></i>Libre / Disponible
+                        </span>
+                        <span class="badge rounded-pill bg-danger px-3 py-2 fs-6">
+                            <i class="fa-solid fa-circle-xmark me-1"></i>Ocupada
+                        </span>
+                        <span class="badge rounded-pill bg-warning text-dark px-3 py-2 fs-6">
+                            <i class="fa-solid fa-star me-1"></i>Tu Selección
+                        </span>
+                    </div>
+                    
+                    <div id="mesasGrid" class="mesas-grid p-2" aria-live="polite"></div>
+                    <p id="mesaSeleccionadaTexto" class="text-center mt-3 mb-0 fw-bold text-primary">
+                        Ninguna mesa seleccionada.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmarReservaBtn" disabled>
+                        <i class="fa-solid fa-check-double me-1"></i>Confirmar Reserva
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container text-center">
+            <img src="../../../img/ICON1.png" alt="Yaku Sabor" style="height:36px; filter:brightness(0) invert(1); margin-bottom:1rem; opacity:0.7;">
+            <p class="small">Lima, Perú · +51 987 654 321 · contacto@yakusabor.com</p>
+            <small>&copy; 2026 Yaku Sabor. Todos los derechos reservados.</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
     <script src="../../Shared/JS/api-config.js"></script>
     <script src="../../Principal/JS/nav.js"></script>
     <script src="../../Principal/JS/login.js"></script>
