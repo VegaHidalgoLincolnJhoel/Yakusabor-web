@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         // ── Público (sin token) ──
-                        .requestMatchers("/api/auth/login", "/api/auth/registro").permitAll()
+                        .requestMatchers("/", "/api/auth/login", "/api/auth/registro").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/productos/**").permitAll()
 
                         // ── Mesas: lectura pública (el cliente necesita verlas al pedir) ──

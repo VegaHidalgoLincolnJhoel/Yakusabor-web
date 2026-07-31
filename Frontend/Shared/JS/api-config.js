@@ -13,6 +13,11 @@
                 .replace(/-(\d+)\.githubpreview\.dev$/, "-8080.githubpreview.dev") + "/api";
         }
 
+        // Si se ejecuta en Vercel o cualquier dominio remoto que no sea localhost
+        if (hostname.endsWith(".vercel.app") || (!hostname.includes("localhost") && !hostname.includes("127.0.0.1"))) {
+            return "https://yakusabor-web.onrender.com/api";
+        }
+
         return `${protocol}//${hostname}:8080/api`;
     }
 
