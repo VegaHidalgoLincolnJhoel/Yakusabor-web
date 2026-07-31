@@ -18,3 +18,9 @@ services:
         generateValue: true
       - key: ENCRYPTION_SECRET
         generateValue: true
+
+databases:
+  - name: yakusabor-db
+    databaseName: yaku_sabores
+    user: yakusabor_user
+    plan: free
