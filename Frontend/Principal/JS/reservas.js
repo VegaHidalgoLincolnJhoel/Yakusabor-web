@@ -92,7 +92,7 @@ const renderMesas = () => {
     mesasEstado.forEach((mesa) => {
         const btn = document.createElement("button");
         btn.type = "button";
-        btn.className = `mesa-btn ${mesa.libre ? "mesa-libre" : "mesa-ocupada"}`;
+        btn.className = `btn btn-outline-${mesa.libre ? "success" : "danger"} fw-bold mesa-btn ${mesa.libre ? "mesa-libre" : "mesa-ocupada"}`;
         btn.dataset.mesaId = mesa.id;
         btn.textContent = mesa.codigo || `Mesa ${mesa.id}`;
         btn.title = `${mesa.ubicacion || "sin ubicación"} - ${mesa.estado || ""}`;

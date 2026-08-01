@@ -144,11 +144,17 @@
                     throw new Error('No autorizado');
                 }
                 const user = await response.json();
-                const rolesStr = (user.roles || []).join(', ');
-                dashboardUserName.textContent = user.nombre || user.email || 'Usuario';
-                dashboardUserRole.textContent = rolesStr || user.role || 'Personal';
+                
+                let roles = user.roles || [];
+                if (roles.length === 0 && user.role) {
+                    roles = [user.role];
+                }
 
-                applyRolePermissions(user.roles || []);
+                const rolesStr = roles.join(', ');
+                dashboardUserName.textContent = user.nombre || user.email || 'Usuario';
+                dashboardUserRole.textContent = rolesStr || 'Personal';
+
+                applyRolePermissions(roles);
             } catch (err) {
                 console.warn('Fallback perfil local o token invalido', err);
                 const localNombre = localStorage.getItem('nombre');

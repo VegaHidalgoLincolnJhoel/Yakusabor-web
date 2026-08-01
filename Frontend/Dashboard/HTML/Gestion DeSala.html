@@ -20,7 +20,7 @@
         <span id="refresh-countdown" style="font-size:.72rem;color:#94a3b8;margin-left:8px;"></span>
       </div>
       <div class="d-flex align-items-center gap-2 flex-wrap">
-        <button class="btn-add-mesa" id="btnAbrirAnadir">
+        <button class="btn btn-primary fw-bold" id="btnAbrirAnadir">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
             stroke-linecap="round">
             <line x1="12" y1="5" x2="12" y2="19" />
@@ -272,8 +272,8 @@
               <span class="mesa-badge">${etiq}</span>
  
               <!-- Fuera de servicio -->
-              <div class="mesa-actions">
-                <button class="btn-ac btn-fuera"
+              <div class="mesa-actions mt-2 d-flex flex-column gap-1">
+                <button class="btn btn-sm btn-outline-warning fw-bold w-100 btn-fuera"
                   data-id="${m.id}" data-codigo="${m.codigo}" data-tipo="fuera"
                   ${canFuera ? "" : "disabled"}
                   title="${canFuera ? "Marcar como Fuera de Servicio" : "Ya está fuera de servicio"}">
@@ -283,14 +283,14 @@
  
               <!-- Liberar -->
               ${canLiberar ? `
-              <button class="btn-ac btn-liberar"
+              <button class="btn btn-sm btn-outline-success fw-bold w-100 btn-liberar"
                 data-id="${m.id}" data-codigo="${m.codigo}" data-tipo="liberar"
                 title="Liberar → Disponible">
                 Liberar
               </button>` : ""}
  
               <!-- Eliminar -->
-              <button class="btn-eliminar"
+              <button class="btn btn-sm btn-outline-danger fw-bold w-100 btn-eliminar"
                 data-id="${m.id}" data-codigo="${m.codigo}" data-tipo="eliminar"
                 title="Eliminar esta mesa">
                 Eliminar mesa
