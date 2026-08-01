@@ -1,25 +1,6 @@
 // ── Config ─────────────────────────────────────────────────
-        function resolveApiBaseUrl() {
-            const override = window.__API_BASE_URL__ || localStorage.getItem("apiBaseUrl");
-            if (override) return override.replace(/\/$/, "");
+        const API = typeof API_BASE_URL !== 'undefined' ? API_BASE_URL : 'https://yakusabor-web.onrender.com/api';
 
-            const { origin, hostname, protocol } = window.location;
-            if (hostname.endsWith(".app.github.dev") || hostname.endsWith(".githubpreview.dev")) {
-                return origin.replace(/-(\d+)\.app\.github\.dev$/, "-8080.app.github.dev")
-                              .replace(/-(\d+)\.githubpreview\.dev$/, "-8080.githubpreview.dev") + "/api";
-            }
-            return `${protocol}//${hostname}:8080/api`;
-        }
-
-        const API = resolveApiBaseUrl();
-
-        function authHeaders() {
-            const token = localStorage.getItem("token");
-            return {
-                "Content-Type": "application/json",
-                ...(token ? { Authorization: `Bearer ${token}` } : {})
-            };
-        }
 
         const fmt = v => `S/ ${Number(v || 0).toFixed(2)}`;
         const IGV_RATE = 0.18; // Tasa de IGV vigente en Perú

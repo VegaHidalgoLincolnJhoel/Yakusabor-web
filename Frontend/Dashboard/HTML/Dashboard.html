@@ -151,6 +151,15 @@
                 applyRolePermissions(user.roles || []);
             } catch (err) {
                 console.warn('Fallback perfil local o token invalido', err);
+                const localNombre = localStorage.getItem('nombre');
+                const localRol = localStorage.getItem('rol');
+                
+                dashboardUserName.textContent = localNombre || 'Usuario Local';
+                dashboardUserRole.textContent = localRol || 'PERSONAL';
+                
+                if (localRol) {
+                    applyRolePermissions([localRol]);
+                }
             }
         }
 

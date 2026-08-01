@@ -148,33 +148,10 @@
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
 
+  <script src="../../Shared/JS/api-config.js"></script>
   <script>
-
-    function resolveApiBaseUrl() {
-      const override = window.__API_BASE_URL__ || localStorage.getItem("apiBaseUrl");
-      if (override) {
-        return override.replace(/\/$/, "");
-      }
-
-      const { origin, hostname, protocol } = window.location;
-
-      if (hostname.endsWith(".app.github.dev") || hostname.endsWith(".githubpreview.dev")) {
-        return origin.replace(/-(\d+)\.app\.github\.dev$/, "-8080.app.github.dev").replace(/-(\d+)\.githubpreview\.dev$/, "-8080.githubpreview.dev") + "/api";
-      }
-
-      return `${protocol}//${hostname}:8080/api`;
-    }
-
-    const API = `${resolveApiBaseUrl()}/mesas`;
+    const API = `${API_BASE_URL}/mesas`;
     const AUTO_REFRESH_MS = 10 * 60 * 1000;
-
-    function authHeaders() {
-      const token = localStorage.getItem("token");
-      return {
-        "Content-Type": "application/json",
-        ...(token ? { Authorization: `Bearer ${token}` } : {})
-      };
-    }
 
     const modalAnadir = new bootstrap.Modal(document.getElementById("modalAnadir"));
     const modalFuera = new bootstrap.Modal(document.getElementById("modalFuera"));
