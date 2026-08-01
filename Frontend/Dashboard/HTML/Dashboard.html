@@ -145,10 +145,10 @@
                 }
                 const user = await response.json();
                 
-                let roles = user.roles || [];
-                if (roles.length === 0 && user.role) {
-                    roles = [user.role];
-                }
+                let roles = [];
+                if (Array.isArray(user.roles)) roles = user.roles;
+                else if (user.rol) roles = [user.rol];
+                else if (user.role) roles = [user.role];
 
                 const rolesStr = roles.join(', ');
                 dashboardUserName.textContent = user.nombre || user.email || 'Usuario';
